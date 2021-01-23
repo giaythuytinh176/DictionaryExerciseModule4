@@ -55,9 +55,15 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
-import { EnglishListComponent } from './backend/component/english-list/english-list.component';
-import { EnglishCreateComponent } from './backend/component/english-create/english-create.component';
+import {
+  DialogEnglishDelete,
+  EnglishListComponent
+} from './backend/component/english-list/english-list.component';
+import {
+  EnglishCreateComponent,
+} from './backend/component/english-create/english-create.component';
 import { EnglishUpdateComponent } from './backend/component/english-update/english-update.component';
+import {ProgressSpinnerOverviewExample} from './backend/component/progress-spinner/progress-spinner-overview-example';
 
 @NgModule({
   declarations: [
@@ -67,7 +73,9 @@ import { EnglishUpdateComponent } from './backend/component/english-update/engli
     SidebarComponent,
     EnglishListComponent,
     EnglishCreateComponent,
-    EnglishUpdateComponent
+    EnglishUpdateComponent,
+    DialogEnglishDelete,
+    ProgressSpinnerOverviewExample
   ],
   imports: [
     BrowserModule,

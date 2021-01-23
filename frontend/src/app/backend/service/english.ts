@@ -4,6 +4,7 @@ export class English {
   type!: string;
   spelling!: string;
   description!: string;
-  created_at!: any;
-  updated_at!: any;
+  vietnamese!: string;
+  // created_at!: any;
+  // updated_at!: any;
 }

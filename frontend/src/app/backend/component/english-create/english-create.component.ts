@@ -15,6 +15,7 @@ export class EnglishCreateComponent implements OnInit {
   submitted = false;
   // tslint:disable-next-line:variable-name
   error_msg = '';
+  showLoadingDelete = false;
 
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private EnglishService: EnglishService,
@@ -49,10 +50,11 @@ export class EnglishCreateComponent implements OnInit {
           } else {
             this.english = new English();
             this.toasrt.success('Added successfully', 'Thêm thành công');
+            this.showLoadingDelete = true;
             setTimeout(() => {
               // this.router.navigate(['english']);
               this.gotoList();
-            }, 1000);
+            }, 2000);
           }
         },
         (error: any) => console.log(error));
@@ -65,6 +67,6 @@ export class EnglishCreateComponent implements OnInit {
   }
 
   gotoList(): void {
-    this.router.navigate(['/english']);
+    this.router.navigate(['/english/list']);
   }
 }

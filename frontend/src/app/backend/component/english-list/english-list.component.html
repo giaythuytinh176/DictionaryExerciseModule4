@@ -1,1 +1,26 @@
-<p>english-list works!</p>
+<div class="table-responsive">
+  <table class="table table-bordered" width="100%" cellspacing="0">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Nane</th>
+      <th>Type</th>
+      <th>spelling</th>
+      <th>description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let english of (englishs | async) ; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{english.name}}</td>
+      <td>{{english.type}}</td>
+      <td>{{english.spelling}}</td>
+      <td>{{english.description}}</td>
+      <td>
+        <button (click)="openDialog(english.id, english.name, english.type)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
