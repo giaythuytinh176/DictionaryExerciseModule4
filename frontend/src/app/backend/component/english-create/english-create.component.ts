@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
-import {EnglishService} from "../../service/english.service";
-import {English} from "../../service/english";
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {EnglishService} from '../../service/english.service';
+import {English} from '../../service/english';
 
 @Component({
   selector: 'app-english-create',
@@ -13,8 +13,10 @@ export class EnglishCreateComponent implements OnInit {
 
   english: English = new English();
   submitted = false;
+  // tslint:disable-next-line:variable-name
   error_msg = '';
 
+  // tslint:disable-next-line:no-shadowed-variable
   constructor(private EnglishService: EnglishService,
               private router: Router,
               private toasrt: ToastrService
