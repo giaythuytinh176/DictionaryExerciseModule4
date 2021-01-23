@@ -35,7 +35,7 @@ export class EnglishListComponent implements OnInit {
     // console.log(this.employees);
   }
 
-  deleteEnglish(id: number): void {
+  deleteEnglish(id: number, name: string): void {
     this.englishService.deleteEnglish(id)
       .subscribe(
         data => {
@@ -44,7 +44,7 @@ export class EnglishListComponent implements OnInit {
             this.toasrt.warning(data.status, 'Error happing while deleting!');
           } else {
             this.reloadData();
-            this.toasrt.success('Deleted successfully', 'Xoá thành công');
+            this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name);
           }
         },
         error => {
@@ -71,7 +71,7 @@ export class EnglishListComponent implements OnInit {
       // console.log(id);
       if (result) {
         console.log(result);
-        this.deleteEnglish(id);
+        this.deleteEnglish(id, name);
       }
       // console.log(this);
       // this.animal = result;
