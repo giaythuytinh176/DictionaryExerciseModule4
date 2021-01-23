@@ -55,13 +55,19 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
+import { EnglishListComponent } from './backend/component/english-list/english-list.component';
+import { EnglishCreateComponent } from './backend/component/english-create/english-create.component';
+import { EnglishUpdateComponent } from './backend/component/english-update/english-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    EnglishListComponent,
+    EnglishCreateComponent,
+    EnglishUpdateComponent
   ],
   imports: [
     BrowserModule,
