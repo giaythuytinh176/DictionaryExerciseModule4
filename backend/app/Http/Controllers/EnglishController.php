@@ -3,83 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\English;
+use App\Services\EnglishService;
 use Illuminate\Http\Request;
 
 class EnglishController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $englishService;
+
+    public function __construct(EnglishService $englishService)
+    {
+        $this->englishService = $englishService;
+    }
+
+    public function search(Request $request)
+    {
+        $englishs = English::where('first_name', 'like', '%' . $request->first_name . '%')->get();
+        return response()->json($englishs, 200);
+    }
+
     public function index()
     {
-        //
+        //return csrf_token();
+        // KFRLlnMMCdyv08LxeM9w01pvBvKcMZDPjS2doOQ5
+
+        $englishs = $this->englishService->getAll();
+        return response()->json($englishs, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show($id)
     {
-        //
+        $dataEnglish = $this->englishService->findById($id);
+
+        return response()->json($dataEnglish['englishs'], $dataEnglish['statusCode']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $dataEnglish = $this->englishService->create($request->all());
+
+        return response()->json($dataEnglish['englishs'], $dataEnglish['statusCode']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\English  $english
-     * @return \Illuminate\Http\Response
-     */
-    public function show(English $english)
+    public function update(Request $request, $id)
     {
-        //
+        $dataEnglish = $this->englishService->update($request->all(), $id);
+
+        return response()->json($dataEnglish['englishs'], $dataEnglish['statusCode']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\English  $english
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(English $english)
+    public function destroy($id)
     {
-        //
-    }
+        $dataEnglish = $this->englishService->destroy($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\English  $english
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, English $english)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\English  $english
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(English $english)
-    {
-        //
+        return response()->json($dataEnglish['message'], $dataEnglish['statusCode']);
     }
 }
