@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-bordered" width="100%" cellspacing="0">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Nane</th>
+      <th>Type</th>
+      <th>spelling</th>
+      <th>description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let vietnamese of (vietnameses | async) ; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{vietnamese.name}}</td>
+      <td>{{vietnamese.type}}</td>
+      <td>{{vietnamese.spelling}}</td>
+      <td>{{vietnamese.description}}</td>
+      <td>
+        <button (click)="openDialog(vietnamese.id, vietnamese.name, vietnamese.type)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
