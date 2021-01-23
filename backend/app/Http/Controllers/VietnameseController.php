@@ -3,83 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vietnamese;
+use App\Services\VietnameseService;
 use Illuminate\Http\Request;
 
 class VietnameseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $vietnameseService;
+
+    public function __construct(VietnameseService $vietnameseService)
+    {
+        $this->vietnameseService = $vietnameseService;
+    }
+
+    public function search(Request $request)
+    {
+        $vietnameses = Vietnamese::where('first_name', 'like', '%' . $request->first_name . '%')->get();
+        return response()->json($vietnameses, 200);
+    }
+
     public function index()
     {
-        //
+        //return csrf_token();
+        // KFRLlnMMCdyv08LxeM9w01pvBvKcMZDPjS2doOQ5
+
+        $vietnameses = $this->vietnameseService->getAll();
+        return response()->json($vietnameses, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show($id)
     {
-        //
+        $dataVietnamese = $this->vietnameseService->findById($id);
+
+        return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $dataVietnamese = $this->vietnameseService->create($request->all());
+
+        return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Vietnamese  $vietnamese
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Vietnamese $vietnamese)
+    public function update(Request $request, $id)
     {
-        //
+        $dataVietnamese = $this->vietnameseService->update($request->all(), $id);
+
+        return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Vietnamese  $vietnamese
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Vietnamese $vietnamese)
+    public function destroy($id)
     {
-        //
-    }
+        $dataVietnamese = $this->vietnameseService->destroy($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Vietnamese  $vietnamese
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Vietnamese $vietnamese)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Vietnamese  $vietnamese
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Vietnamese $vietnamese)
-    {
-        //
+        return response()->json($dataVietnamese['message'], $dataVietnamese['statusCode']);
     }
 }
