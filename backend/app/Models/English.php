@@ -15,4 +15,9 @@ class English extends Model
         'spelling',
         'description',
     ];
+
+    public function vietnameses()
+    {
+        return $this->belongsToMany(Vietnamese::class, 'english_vietnamese', 'english_id', 'vietnamese_id');
+    }
 }

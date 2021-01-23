@@ -17,3 +17,24 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/english', 'EnglishController@index')->name('english.all');
+Route::get('/english/{id}', 'EnglishController@show')->name('english.show');
+
+
+// jwt-open api
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@authenticate');
+
+// jwt-authenticate api
+//Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('user', 'UserController@getAuthenticatedUser');
+
+    // english
+    Route::post('/english', 'EnglishController@store')->name('english.store');
+    Route::put('/english/{id}', 'EnglishController@update')->name('english.update');
+    Route::delete('/english/{id}', 'EnglishController@destroy')->name('english.destroy');
+    Route::post('/english/search/{first_name}', 'EnglishController@search')->name('english.search');
+
+    //Route::get('closed', 'DataController@closed');
+//});
