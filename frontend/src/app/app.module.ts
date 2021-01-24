@@ -56,6 +56,7 @@ import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
 import {
+  DialogEnglishCreate,
   DialogEnglishDelete,
   EnglishListComponent
 } from './backend/component/english-list/english-list.component';
@@ -82,7 +83,8 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     VietnameseListComponent,
     VietnameseCreateComponent,
     VietnameseUpdateComponent,
-    DialogVietnameseDelete
+    DialogVietnameseDelete,
+    DialogEnglishCreate
   ],
   imports: [
     BrowserModule,
@@ -92,7 +94,6 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     // meterial
     A11yModule,

@@ -14,7 +14,7 @@ export class VietnameseCreateComponent implements OnInit {
   submitted = false;
   // tslint:disable-next-line:variable-name
   error_msg = '';
-  showLoadingDelete = false;
+  showLoadingBar = false;
 
   constructor(private vietnameseService: VietnameseService,
               private router: Router,
@@ -46,11 +46,11 @@ export class VietnameseCreateComponent implements OnInit {
           }
           // console.log(this.error_msg);
           if (this.error_msg) {
-            this.toasrt.warning(this.error_msg, 'Error happing while adding!');
+            this.toasrt.warning(this.error_msg, 'Error happing while adding!', {progressAnimation: 'decreasing', timeOut: 3000});
           } else {
             this.vietnamese = new Vietnamese();
-            this.toasrt.success('Added successfully', 'Thêm thành công');
-            this.showLoadingDelete = true;
+            this.toasrt.success('Added successfully', 'Thêm thành công', {progressAnimation: 'decreasing', timeOut: 3000});
+            this.showLoadingBar = true;
             setTimeout(() => {
               // this.router.navigate(['employees']);
               this.gotoList();
