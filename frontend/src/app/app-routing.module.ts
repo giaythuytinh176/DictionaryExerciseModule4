@@ -6,6 +6,7 @@ import {EnglishUpdateComponent} from './backend/component/english-update/english
 import {VietnameseUpdateComponent} from './backend/component/vietnamese-update/vietnamese-update.component';
 import {VietnameseListComponent} from './backend/component/vietnamese-list/vietnamese-list.component';
 import {VietnameseCreateComponent} from './backend/component/vietnamese-create/vietnamese-create.component';
+import {LoginComponent} from "./backend/component/login/login.component";
 
 const routes: Routes = [
   { path: 'admin/vietnamese/list', component: VietnameseListComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'admin/english/add', component: EnglishCreateComponent },
   { path: 'admin/english/update/:id', component: EnglishUpdateComponent },
   { path: 'admin', component: EnglishListComponent },
+  { path: 'admin/login', component: LoginComponent },
 ];
 
 @NgModule({

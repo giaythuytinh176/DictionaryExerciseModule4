@@ -26,11 +26,11 @@ Route::get('/english/{id}', 'EnglishController@show')->name('english.show');
 
 
 // jwt-open api
-Route::post('register', 'UserController@register');
+// Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 
 // jwt-authenticate api
-//Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
 
     Route::post('/vietnamese', 'VietnameseController@store')->name('vietnamese.store');
@@ -44,4 +44,4 @@ Route::post('login', 'UserController@authenticate');
     Route::delete('/english/{id}', 'EnglishController@destroy')->name('english.destroy');
     Route::post('/english/search/{first_name}', 'EnglishController@search')->name('english.search');
     //Route::get('closed', 'DataController@closed');
-//});
+});

@@ -68,6 +68,7 @@ import {ProgressSpinnerOverviewExample} from './backend/component/progress-spinn
 import { VietnameseListComponent, DialogVietnameseDelete } from './backend/component/vietnamese-list/vietnamese-list.component';
 import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
 import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
+import { LoginComponent } from './backend/component/login/login.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     VietnameseCreateComponent,
     VietnameseUpdateComponent,
     DialogVietnameseDelete,
-    DialogEnglishCreate
+    DialogEnglishCreate,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

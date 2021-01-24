@@ -3,14 +3,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {TokenStorageService} from "./token-storage.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnglishService {
+  authToken!: any;
+  reqHeader!: any;
 
-  constructor(private http: HttpClient) {
-
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+    this.authToken = tokenStorage.getToken();
+    console.log(this.authToken);
+    this.reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // cu phap co dau cach dang sau Bearer
+      'Authorization': 'Bearer ' + this.authToken
+    });
   }
 
   getEnglish(id: number): Observable<any> {
@@ -21,15 +30,15 @@ export class EnglishService {
     // @ts-ignore
     english.vietnamese = JSON.stringify(english.vietnamese) || [];
     console.log(english);
-    return this.http.post(environment.apiUrl + '/english', english);
+    return this.http.post(environment.apiUrl + '/english', english, { headers: this.reqHeader });
   }
 
   updateEnglish(id: number, value: any): Observable<object> {
-    return this.http.put(environment.apiUrl + `/english/${id}`, value);
+    return this.http.put(environment.apiUrl + `/english/${id}`, value, { headers: this.reqHeader });
   }
 
   deleteEnglish(id: number): Observable<any> {
-    return this.http.delete(environment.apiUrl + `/english/${id}`);
+    return this.http.delete(environment.apiUrl + `/english/${id}`, { headers: this.reqHeader });
   }
 
   getEnglishsList(): Observable<any> {
