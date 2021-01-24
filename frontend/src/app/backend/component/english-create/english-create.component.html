@@ -10,8 +10,7 @@
       <div class="form-group">
         <label for="name">Tiếng Việt</label>
         <select class="form-control" id="vietnamese" required [(ngModel)]="english.vietnamese" name="vietnamese" multiple>
-          <option value="6">Xin chào</option>
-          <option value="7">Tại sao</option>
+          <option *ngFor="let vietnamese of (vietnameses | async) ; let i = index" value="{{ vietnamese.id }}">{{ vietnamese.name }}</option>
         </select>
       </div>
 

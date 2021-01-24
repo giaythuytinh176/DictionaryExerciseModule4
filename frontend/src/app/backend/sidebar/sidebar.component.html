@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="admin" href="index.html">
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-laugh-wink"></i>
     </div>
@@ -14,7 +14,7 @@
 
   <!-- Nav Item - Dashboard -->
   <li class="nav-item">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" routerLink="admin" href="index.html">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
   </li>
@@ -37,8 +37,8 @@
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">English:</h6>
-        <a class="collapse-item" routerLink="english/list" href="buttons.html">Danh sách</a>
-        <a class="collapse-item" routerLink="english/add" href="cards.html">Thêm</a>
+        <a class="collapse-item" routerLink="admin/english/list" href="buttons.html">Danh sách</a>
+        <a class="collapse-item" routerLink="admin/english/add" href="cards.html">Thêm</a>
       </div>
     </div>
   </li>
@@ -54,8 +54,8 @@
          data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Vietnamese:</h6>
-        <a class="collapse-item" href="utilities-color.html">Danh sách</a>
-        <a class="collapse-item" href="utilities-border.html">Thêm</a>
+        <a class="collapse-item" routerLink="admin/vietnamese/list" href="utilities-color.html">Danh sách</a>
+        <a class="collapse-item" routerLink="admin/vietnamese/add" href="utilities-border.html">Thêm</a>
       </div>
     </div>
   </li>

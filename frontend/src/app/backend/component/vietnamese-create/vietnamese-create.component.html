@@ -1,0 +1,42 @@
+<div class="container">
+  <h3>Add Vietnamese</h3>
+  <div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="vietnamese.name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Type</label>
+        <input type="text" class="form-control" id="type" required [(ngModel)]="vietnamese.type" name="type">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Spelling</label>
+        <input type="text" class="form-control" id="spelling" required [(ngModel)]="vietnamese.spelling" name="type">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input type="text" class="form-control" id="description" required [(ngModel)]="vietnamese.description"
+               name="type">
+      </div>
+
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+
+  <div *ngIf="showLoadingDelete === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h4>You submitted successfully!</h4>
+
+    <div class="error-msg" *ngIf="error_msg != ''">{{error_msg}}.
+      <a routerLink="/login" class="nav-link">Login</a>
+    </div>
+    <!-- <button class="btn btn-success" (click)="newEmployee()">Add</button> -->
+  </div>
+</div>

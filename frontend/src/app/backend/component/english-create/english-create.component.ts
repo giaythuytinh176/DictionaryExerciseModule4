@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EnglishService} from '../../service/english.service';
 import {English} from '../../service/english';
+import {Observable} from "rxjs";
+import {Vietnamese} from "../../service/vietnamese";
+import {VietnameseService} from "../../service/vietnamese.service";
 
 @Component({
   selector: 'app-english-create',
@@ -16,14 +19,19 @@ export class EnglishCreateComponent implements OnInit {
   // tslint:disable-next-line:variable-name
   error_msg = '';
   showLoadingDelete = false;
+  vietnameses!: Observable<Vietnamese[]>;
 
   // tslint:disable-next-line:no-shadowed-variable
   constructor(private EnglishService: EnglishService,
               private router: Router,
-              private toasrt: ToastrService
-  ) { }
+              private toasrt: ToastrService,
+              private vietnameseService: VietnameseService,
+  ) {
+  }
 
   ngOnInit(): void {
+    this.vietnameses = this.vietnameseService.getVietnamesesList();
+    // console.log(this.vietnameses);
   }
 
   newEnglish(): void {
@@ -31,9 +39,16 @@ export class EnglishCreateComponent implements OnInit {
     this.english = new English();
   }
 
+  error(): void {
+    this.toasrt.warning('Có lỗi xảy ra.', 'Your must enter all fields!');
+    setTimeout( () => {
+      window.location.reload();
+    }, 1000);
+  }
+
   save(): void {
     // console.log(this.submitted);
-    console.log(this.english);
+    // console.log(this.english);
     this.EnglishService
       .createEnglish(this.english)
       .subscribe((data: any) => {
@@ -44,8 +59,9 @@ export class EnglishCreateComponent implements OnInit {
               this.error_msg = 'Token is Invalid';
             }
           }
+
           // console.log(this.error_msg);
-          if (this.error_msg) {
+          else if (this.error_msg) {
             this.toasrt.warning(this.error_msg, 'Error happing while adding!');
           } else {
             this.english = new English();
@@ -57,7 +73,7 @@ export class EnglishCreateComponent implements OnInit {
             }, 2000);
           }
         },
-        (error: any) => console.log(error));
+        (error: any) => this.error());
   }
 
   onSubmit(): void {
@@ -67,6 +83,6 @@ export class EnglishCreateComponent implements OnInit {
   }
 
   gotoList(): void {
-    this.router.navigate(['/english/list']);
+    this.router.navigate(['admin/english/list']);
   }
 }

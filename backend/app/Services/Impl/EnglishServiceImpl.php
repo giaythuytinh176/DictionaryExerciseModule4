@@ -83,13 +83,13 @@ class EnglishServiceImpl implements EnglishService
         $english = $this->englishRepository->findById($id);
 
         $statusCode = 404;
-        $message = "User not found";
+        $message = "Data not found";
         if ($english) {
             $this->englishRepository->destroy($english);
+            $english->vietnameses()->detach();
             $statusCode = 200;
             $message = "Delete success!";
         }
-
         $data = [
             'statusCode' => $statusCode,
             'message' => $message
