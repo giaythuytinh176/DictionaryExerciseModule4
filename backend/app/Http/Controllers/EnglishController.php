@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\English;
+use App\Models\Vietnamese;
 use App\Services\EnglishService;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,9 @@ class EnglishController extends Controller
     public function store(Request $request)
     {
         $dataEnglish = $this->englishService->create($request->all());
-
+        foreach (json_decode($request->vietnamese, true) as $vn) {
+            Vietnamese::find($vn)->englishs()->attach($dataEnglish['englishs']->id);
+        }
         return response()->json($dataEnglish['englishs'], $dataEnglish['statusCode']);
     }
 

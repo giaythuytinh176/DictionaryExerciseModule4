@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-bordered" width="100%" cellspacing="0">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Spelling</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let english of (englishs | async) ; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{english.name}}</td>
+      <td>{{english.type}}</td>
+      <td>{{english.spelling}}</td>
+      <td>{{english.description}}</td>
+      <td>
+        <button (click)="openDialog(english.id, english.name, english.type)" mat-flat-button color="warn">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

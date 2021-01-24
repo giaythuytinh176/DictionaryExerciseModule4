@@ -1,0 +1,48 @@
+<div class="container">
+  <h3>Create English Dictionary</h3>
+  <div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="english.name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Tiếng Việt</label>
+        <select class="form-control" id="vietnamese" required [(ngModel)]="english.vietnamese" name="vietnamese" multiple>
+          <option *ngFor="let vietnamese of (vietnameses | async) ; let i = index" value="{{ vietnamese.id }}">{{ vietnamese.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Type</label>
+        <input type="text" class="form-control" id="type" required [(ngModel)]="english.type" name="type">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Spelling</label>
+        <input type="text" class="form-control" id="spelling" required [(ngModel)]="english.spelling" name="spelling">
+      </div>
+
+      <div class="form-group">
+        <label for="name">Description</label>
+        <input type="text" class="form-control" id="description" required [(ngModel)]="english.description"
+               name="description">
+      </div>
+
+      <button style="text-align: center" type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+
+  <div *ngIf="showLoadingDelete === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div [hidden]="!submitted">
+    <div class="error-msg" *ngIf="error_msg != ''">{{error_msg}}.
+      <a routerLink="/login" class="nav-link">Login</a>
+    </div>
+    <!-- <button class="btn btn-success" (click)="newEmployee()">Add</button> -->
+  </div>
+
+</div>

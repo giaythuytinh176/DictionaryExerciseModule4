@@ -83,7 +83,7 @@ class VietnameseServiceImpl implements VietnameseService
         $vietnamese = $this->vietnameseRepository->findById($id);
 
         $statusCode = 404;
-        $message = "User not found";
+        $message = "Data not found";
         if ($vietnamese) {
             $this->vietnameseRepository->destroy($vietnamese);
             $statusCode = 200;

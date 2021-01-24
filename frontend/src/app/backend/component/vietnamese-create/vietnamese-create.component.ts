@@ -14,6 +14,7 @@ export class VietnameseCreateComponent implements OnInit {
   submitted = false;
   // tslint:disable-next-line:variable-name
   error_msg = '';
+  showLoadingDelete = false;
 
   constructor(private vietnameseService: VietnameseService,
               private router: Router,
@@ -49,6 +50,7 @@ export class VietnameseCreateComponent implements OnInit {
           } else {
             this.vietnamese = new Vietnamese();
             this.toasrt.success('Added successfully', 'Thêm thành công');
+            this.showLoadingDelete = true;
             setTimeout(() => {
               // this.router.navigate(['employees']);
               this.gotoList();
@@ -65,6 +67,6 @@ export class VietnameseCreateComponent implements OnInit {
   }
 
   gotoList(): void {
-    this.router.navigate(['/vietnamese']);
+    this.router.navigate(['admin/vietnamese/list']);
   }
 }

@@ -55,10 +55,18 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
+import {
+  DialogEnglishDelete,
+  EnglishListComponent
+} from './backend/component/english-list/english-list.component';
+import {
+  EnglishCreateComponent,
+} from './backend/component/english-create/english-create.component';
+import { EnglishUpdateComponent } from './backend/component/english-update/english-update.component';
+import {ProgressSpinnerOverviewExample} from './backend/component/progress-spinner/progress-spinner-overview-example';
 import { VietnameseListComponent, DialogVietnameseDelete } from './backend/component/vietnamese-list/vietnamese-list.component';
 import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
 import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
-
 
 @NgModule({
   declarations: [
@@ -66,6 +74,11 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
+    EnglishListComponent,
+    EnglishCreateComponent,
+    EnglishUpdateComponent,
+    DialogEnglishDelete,
+    ProgressSpinnerOverviewExample,
     VietnameseListComponent,
     VietnameseCreateComponent,
     VietnameseUpdateComponent,

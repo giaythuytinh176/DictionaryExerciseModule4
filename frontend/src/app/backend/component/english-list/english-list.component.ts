@@ -1,27 +1,25 @@
+import {Observable} from 'rxjs';
 import {Component, Inject, OnInit} from '@angular/core';
-import {Vietnamese} from '../../service/vietnamese';
+import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {VietnameseService} from '../../service/vietnamese.service';
+import {English} from '../../service/english';
+import {EnglishService} from '../../service/english.service';
 
 @Component({
-  selector: 'app-vietnamese-list',
-  templateUrl: './vietnamese-list.component.html',
-  styleUrls: ['./vietnamese-list.component.css']
+  selector: 'app-english-list',
+  templateUrl: './english-list.component.html',
+  styleUrls: ['./english-list.component.css']
 })
-export class VietnameseListComponent implements OnInit {
-
-  vietnameses!: Observable<Vietnamese[]>;
+export class EnglishListComponent implements OnInit {
+  englishs!: Observable<English[]>;
   id!: number;
   name!: string;
   type!: string;
   spelling!: string;
   description!: string;
 
-
-  constructor(private vietnameseService: VietnameseService,
+  constructor(private englishService: EnglishService,
               private router: Router,
               public dialog: MatDialog,
               private toasrt: ToastrService,
@@ -33,12 +31,12 @@ export class VietnameseListComponent implements OnInit {
   }
 
   reloadData(): void {
-    this.vietnameses = this.vietnameseService.getVietnamesesList();
+    this.englishs = this.englishService.getEnglishsList();
     // console.log(this.employees);
   }
 
-  deleteVietnamese(id: number): void {
-    this.vietnameseService.deleteVietnamese(id)
+  deleteEnglish(id: number, name: string): void {
+    this.englishService.deleteEnglish(id)
       .subscribe(
         data => {
           console.log(data);
@@ -46,7 +44,7 @@ export class VietnameseListComponent implements OnInit {
             this.toasrt.warning(data.status, 'Error happing while deleting!');
           } else {
             this.reloadData();
-            this.toasrt.success('Deleted successfully', 'Xoá thành công');
+            this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name);
           }
         },
         error => {
@@ -55,15 +53,17 @@ export class VietnameseListComponent implements OnInit {
         });
   }
 
+  englishDetails(id: number): void {
+    this.router.navigate(['details', id]);
+  }
 
-
-  getVietnamesesByName(): void {
+  getEnglishsByName(): void {
     console.log('here');
-    this.vietnameses = this.vietnameseService.getVietnamesesByName(this.name);
+    this.englishs = this.englishService.getEnglishsByName(this.name);
   }
 
   openDialog(id: number, name: string, type: string, spelling?: string, description?: string): void {
-    const dialogRef = this.dialog.open(DialogVietnameseDelete, {
+    const dialogRef = this.dialog.open(DialogEnglishDelete, {
       data: {id: id, name: name, type: type, spelling: spelling, description: description}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -71,7 +71,7 @@ export class VietnameseListComponent implements OnInit {
       // console.log(id);
       if (result) {
         console.log(result);
-        this.deleteVietnamese(id);
+        this.deleteEnglish(id, name);
       }
       // console.log(this);
       // this.animal = result;
@@ -81,13 +81,13 @@ export class VietnameseListComponent implements OnInit {
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'dialog-vietnamese-delete',
-  templateUrl: 'dialog-vietnamese-delete.html',
+  selector: 'dialog-english-delete',
+  templateUrl: 'dialog-english-delete.html',
 })
 // tslint:disable-next-line:component-class-suffix
-export class DialogVietnameseDelete {
+export class DialogEnglishDelete {
   constructor(
-    public dialogRef: MatDialogRef<DialogVietnameseDelete>,
+    public dialogRef: MatDialogRef<DialogEnglishDelete>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     // console.log(this.data);
@@ -105,5 +105,3 @@ export interface DialogData {
   spelling: string;
   description: string;
 }
-
-
