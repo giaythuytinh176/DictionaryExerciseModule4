@@ -55,13 +55,21 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
+import { VietnameseListComponent, DialogVietnameseDelete } from './backend/component/vietnamese-list/vietnamese-list.component';
+import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
+import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    VietnameseListComponent,
+    VietnameseCreateComponent,
+    VietnameseUpdateComponent,
+    DialogVietnameseDelete
   ],
   imports: [
     BrowserModule,
