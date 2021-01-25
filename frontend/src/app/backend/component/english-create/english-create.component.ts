@@ -6,7 +6,8 @@ import {English} from '../../service/english';
 import {Observable} from 'rxjs';
 import {VietnameseService} from '../../service/vietnamese.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog} from "@angular/material/dialog";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 @Component({
   selector: 'app-english-create',
@@ -25,13 +26,39 @@ export class EnglishCreateComponent implements OnInit {
   englishForm!: FormGroup;
   public englishFormAttempt: boolean;
 
-  // tslint:disable-next-line:no-shadowed-variable
+  config: any = {
+    height: 250,
+    theme: 'modern',
+    // powerpaste advcode toc tinymcespellchecker a11ychecker mediaembed linkchecker help
+    plugins: 'print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image imagetools link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists textcolor wordcount contextmenu colorpicker textpattern',
+    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+    image_advtab: true,
+    imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
+    templates: [
+      {title: 'Test template 1', content: 'Test 1'},
+      {title: 'Test template 2', content: 'Test 2'}
+    ],
+    content_css: [
+      '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+      '//www.tinymce.com/css/codepen.min.css'
+    ]
+  };
+  description = '';
+  typeList = [
+    'Danh từ',
+    'Động từ',
+    'Tính từ',
+    'Trạng từ',
+    'Giới từ',
+  ];
+
   constructor(private EnglishService: EnglishService,
               private router: Router,
               private toasrt: ToastrService,
               private vietnameseService: VietnameseService,
               private fb: FormBuilder,
-              public dialog: MatDialog
+              public dialog: MatDialog,
+              private tokenstorage: TokenStorageService
   ) {
   }
 
@@ -82,11 +109,13 @@ export class EnglishCreateComponent implements OnInit {
               this.error_msg = 'Authorization Token not found';
             } else if (data.status.includes('Token is Invalid')) {
               this.error_msg = 'Token is Invalid';
+            } else if (data.status.includes('oken is Expire')) {
+              this.error_msg = 'Token is Expired';
             }
           }
-
           // console.log(this.error_msg);
           if (this.error_msg) {
+            this.tokenstorage.signOut();
             this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
               progressAnimation: 'decreasing',
               timeOut: 3000
