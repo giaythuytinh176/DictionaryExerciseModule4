@@ -8,6 +8,7 @@ import {EnglishService} from '../../service/english.service';
 import {EnglishCreateComponent} from "../english-create/english-create.component";
 import {VietnameseService} from "../../service/vietnamese.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {TokenStorageService} from "../../service/token-storage.service";
 
 @Component({
   selector: 'app-english-list',
@@ -21,11 +22,13 @@ export class EnglishListComponent implements OnInit {
   type!: string;
   spelling!: string;
   description!: string;
+  error_msg = '';
 
   constructor(private englishService: EnglishService,
               private router: Router,
               public dialog: MatDialog,
               private toasrt: ToastrService,
+              private tokenstorage: TokenStorageService
   ) {
   }
 
@@ -42,9 +45,18 @@ export class EnglishListComponent implements OnInit {
     this.englishService.deleteEnglish(id)
       .subscribe(
         data => {
-          console.log(data);
-          if ((data.status || []).indexOf('Token is Invalid') !== -1) {
-            this.toasrt.warning(data.status, 'Error happing while deleting!', {
+          if (data.status !== undefined && data.status !== 'undefined') {
+            if (data.status.includes('Authorization Token not found')) {
+              this.error_msg = 'Authorization Token not found';
+            } else if (data.status.includes('Token is Invalid')) {
+              this.error_msg = 'Token is Invalid';
+            } else if (data.status.includes('oken is Expire')) {
+              this.error_msg = 'Token is Expired';
+            }
+          }
+          if (this.error_msg) {
+            this.tokenstorage.signOut();
+            this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
               progressAnimation: 'decreasing',
               timeOut: 3000
             });
@@ -115,6 +127,7 @@ export class EnglishListComponent implements OnInit {
 })
 // tslint:disable-next-line:component-class-suffix
 export class DialogEnglishDelete {
+
   constructor(
     public dialogRef: MatDialogRef<DialogEnglishDelete>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -151,6 +164,13 @@ export class DialogEnglishCreate implements OnInit {
   // toppings = new FormControl();
   englishForm!: FormGroup;
   public englishFormAttempt: boolean;
+  typeList = [
+    'Danh từ',
+    'Động từ',
+    'Tính từ',
+    'Trạng từ',
+    'Giới từ',
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<DialogEnglishCreate>,
@@ -159,7 +179,8 @@ export class DialogEnglishCreate implements OnInit {
     private router: Router,
     private toasrt: ToastrService,
     private vietnameseService: VietnameseService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tokenstorage: TokenStorageService
   ) {
     // console.log(this.data);
   }
@@ -211,11 +232,13 @@ export class DialogEnglishCreate implements OnInit {
               this.error_msg = 'Authorization Token not found';
             } else if (data.status.includes('Token is Invalid')) {
               this.error_msg = 'Token is Invalid';
+            } else if (data.status.includes('oken is Expire')) {
+              this.error_msg = 'Token is Expired';
             }
           }
-
           // console.log(this.error_msg);
-          else if (this.error_msg) {
+          if (this.error_msg) {
+            this.tokenstorage.signOut();
             this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
               progressAnimation: 'decreasing',
               timeOut: 3000

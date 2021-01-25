@@ -22,13 +22,16 @@
         </mat-form-field>
         <br>
         <br>
-        <mat-form-field class="example-full-width">
-          <mat-label>Type</mat-label>
-          <input type="text" matInput formControlName="type" placeholder="n">
-          <mat-error *ngIf="englishForm.get('type')!.invalid && englishForm.get('type')!.touched  || (englishForm.get('type').untouched && englishFormAttempt)">
-            Type is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type" multiple>
+          <mat-option *ngFor="let type of typeList" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="englishForm.get('type')!.invalid && englishForm.get('type')!.touched  || (englishForm.get('type').untouched && englishFormAttempt)">
+          Type is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
         <br>
         <br>
         <mat-form-field class="example-full-width">
