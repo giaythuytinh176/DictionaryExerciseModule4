@@ -86,6 +86,8 @@ class VietnameseServiceImpl implements VietnameseService
         $message = "Data not found";
         if ($vietnamese) {
             $this->vietnameseRepository->destroy($vietnamese);
+            $vietnamese->englishs()->detach();
+
             $statusCode = 200;
             $message = "Delete success!";
         }

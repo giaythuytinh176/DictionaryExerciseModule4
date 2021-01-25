@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\English;
 use App\Models\Vietnamese;
 use App\Services\VietnameseService;
 use Illuminate\Http\Request;
@@ -41,7 +42,11 @@ class VietnameseController extends Controller
     {
         $dataVietnamese = $this->vietnameseService->create($request->all());
 
+        foreach (json_decode($request->english, true) as $vn) {
+            English::find($vn)->vietnameses()->attach($dataVietnamese['vietnameses']->id);
+        }
         return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
+
     }
 
     public function update(Request $request, $id)

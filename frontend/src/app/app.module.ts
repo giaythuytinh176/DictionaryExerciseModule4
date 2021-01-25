@@ -65,7 +65,11 @@ import {
 } from './backend/component/english-create/english-create.component';
 import { EnglishUpdateComponent } from './backend/component/english-update/english-update.component';
 import {ProgressSpinnerOverviewExample} from './backend/component/progress-spinner/progress-spinner-overview-example';
-import { VietnameseListComponent, DialogVietnameseDelete } from './backend/component/vietnamese-list/vietnamese-list.component';
+import {
+  VietnameseListComponent,
+  DialogVietnameseDelete,
+  DialogVietnameseCreate
+} from './backend/component/vietnamese-list/vietnamese-list.component';
 import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
 import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
 import { LoginComponent } from './backend/component/login/login.component';
@@ -89,7 +93,8 @@ import { IndexComponent } from './frontend/index/index.component';
     DialogVietnameseDelete,
     DialogEnglishCreate,
     LoginComponent,
-    IndexComponent
+    IndexComponent,
+    DialogVietnameseCreate
   ],
   imports: [
     BrowserModule,
