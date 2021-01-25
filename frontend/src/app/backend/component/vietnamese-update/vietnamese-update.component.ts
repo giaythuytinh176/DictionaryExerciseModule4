@@ -42,6 +42,6 @@ export class VietnameseUpdateComponent implements OnInit {
   }
 
   gotoList(): void {
-    this.router.navigate(['/vietnamese']);
+    this.router.navigate(['admin/vietnamese']);
   }
 }
