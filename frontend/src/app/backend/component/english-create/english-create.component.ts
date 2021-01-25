@@ -99,11 +99,11 @@ export class EnglishCreateComponent implements OnInit {
     // console.log(this.english);
     // console.log(111);
     this.english = this.englishForm.value;
-    // console.log(this.englishForm);
     // this.english.vietnamese = this.toppings.value;
-    this.EnglishService
+    const subscription = this.EnglishService
       .createEnglish(this.english)
       .subscribe((data: any) => {
+          console.log("next");
           if (data.status !== undefined && data.status !== 'undefined') {
             if (data.status.includes('Authorization Token not found')) {
               this.error_msg = 'Authorization Token not found';
@@ -126,14 +126,20 @@ export class EnglishCreateComponent implements OnInit {
               progressAnimation: 'decreasing',
               timeOut: 3000
             });
+            console.log(2222);
             this.showLoadingBar = true;
             setTimeout(() => {
               // this.router.navigate(['english']);
               this.gotoList();
             }, 2000);
+            console.log(44444);
           }
         },
-        (error: any) => this.error());
+        (error: any) => this.error(), () => {
+          console.log('Done');
+          console.log(this);
+        }
+      );
   }
 
   onSubmit(): void {

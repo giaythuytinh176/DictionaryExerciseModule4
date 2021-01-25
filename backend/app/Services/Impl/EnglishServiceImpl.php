@@ -45,6 +45,7 @@ class EnglishServiceImpl implements EnglishService
 
     public function create($request)
     {
+        $request['type'] = implode(", ", json_decode($request['type'], true));
         $english = $this->englishRepository->create($request);
 
         $statusCode = 201;
