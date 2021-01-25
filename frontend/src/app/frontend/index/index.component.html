@@ -1,0 +1,43 @@
+<div class="pos-f-t">
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <h4 class="text-white">Doling Dương</h4>
+      <span class="text-muted"><a href="">Home</a></span><br>
+      <span class="text-muted"><a href="/admin">Admin</a></span>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <p style="font-size: 30px">TỬ ĐIỂN ANH VIỆT</p>
+  </nav>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 mt-5 col-md-6">
+      <mat-card>
+        <mat-card-content>
+          <textarea rows="5" matInput [(ngModel)]="en" placeholder="English"></textarea>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-6 mt-5 col-md-6">
+      <mat-card>
+        <mat-card-content>
+          <textarea rows="5" matInput [(ngModel)]="vi" placeholder="Vietnamese"></textarea>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!--    <div *ngIf="showResult" class="col-lg-6 mt-5" style="float:none;margin:auto;">-->
+    <!--      <mat-card>-->
+    <!--        <mat-card-content>-->
+    <!--          xxxxxxxx-->
+    <!--        </mat-card-content>-->
+    <!--      </mat-card>-->
+    <!--    </div>-->
+  </div>
+</div>

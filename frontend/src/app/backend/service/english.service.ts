@@ -29,7 +29,8 @@ export class EnglishService {
   createEnglish(english: object): Observable<object> {
     // @ts-ignore
     english.vietnamese = JSON.stringify(english.vietnamese) || [];
-    console.log(english);
+    // @ts-ignore
+    english.type = JSON.stringify(english.type) || [];
     return this.http.post(environment.apiUrl + '/english', english, { headers: this.reqHeader });
   }
 
