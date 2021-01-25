@@ -7,8 +7,10 @@ import {VietnameseUpdateComponent} from './backend/component/vietnamese-update/v
 import {VietnameseListComponent} from './backend/component/vietnamese-list/vietnamese-list.component';
 import {VietnameseCreateComponent} from './backend/component/vietnamese-create/vietnamese-create.component';
 import {LoginComponent} from "./backend/component/login/login.component";
+import {IndexComponent} from "./frontend/index/index.component";
 
 const routes: Routes = [
+  {path: '', component: IndexComponent},
   {path: 'admin/vietnamese/list', component: VietnameseListComponent},
   {path: 'admin/vietnamese/add', component: VietnameseCreateComponent},
   {path: 'admin/vietnamese/update/:id', component: VietnameseUpdateComponent},

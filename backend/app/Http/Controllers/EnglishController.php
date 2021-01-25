@@ -40,6 +40,7 @@ class EnglishController extends Controller
 
     public function store(Request $request)
     {
+        $request->type = implode(", ", json_decode($request->type, true));
         $dataEnglish = $this->englishService->create($request->all());
         foreach (json_decode($request->vietnamese, true) as $vn) {
             Vietnamese::find($vn)->englishs()->attach($dataEnglish['englishs']->id);

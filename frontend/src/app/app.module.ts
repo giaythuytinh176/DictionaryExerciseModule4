@@ -69,6 +69,8 @@ import { VietnameseListComponent, DialogVietnameseDelete } from './backend/compo
 import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
 import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
 import { LoginComponent } from './backend/component/login/login.component';
+import {NgxTinymceModule} from "ngx-tinymce";
+import { IndexComponent } from './frontend/index/index.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,8 @@ import { LoginComponent } from './backend/component/login/login.component';
     VietnameseUpdateComponent,
     DialogVietnameseDelete,
     DialogEnglishCreate,
-    LoginComponent
+    LoginComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
@@ -141,7 +144,11 @@ import { LoginComponent } from './backend/component/login/login.component';
     MatTreeModule,
     OverlayModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    NgxTinymceModule,
+    NgxTinymceModule.forRoot({
+      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/',
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
