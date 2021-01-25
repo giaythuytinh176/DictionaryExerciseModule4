@@ -3,10 +3,10 @@ import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EnglishService} from '../../service/english.service';
 import {English} from '../../service/english';
-import {Observable} from "rxjs";
-import {VietnameseService} from "../../service/vietnamese.service";
+import {Observable} from 'rxjs';
+import {VietnameseService} from '../../service/vietnamese.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-english-create',
@@ -42,7 +42,7 @@ export class EnglishCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.vietnameses = this.vietnameseService.getVietnamesesList();
-    //console.log(this.vietnameses);
+    // console.log(this.vietnameses);
     this.englishForm = this.fb.group({
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],
