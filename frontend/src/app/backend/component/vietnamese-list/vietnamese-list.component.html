@@ -18,9 +18,13 @@
       <td>{{vietnamese.spelling}}</td>
       <td>{{vietnamese.description}}</td>
       <td>
-        <button (click)="openDialog(vietnamese.id, vietnamese.name, vietnamese.type)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+        <a routerLink="/admin/vietnamese/update/{{vietnamese.id}}" class="btn btn-warning">Edit</a>
+        <button (click)="openDialog(vietnamese.id, vietnamese.name, vietnamese.type)" class="btn btn-danger"
+                style="margin-left: 10px">Delete
+        </button>
       </td>
     </tr>
     </tbody>
   </table>
+<!--  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons ]></mat-paginator>-->
 </div>

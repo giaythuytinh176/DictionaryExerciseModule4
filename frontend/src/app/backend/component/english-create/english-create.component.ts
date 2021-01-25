@@ -1,14 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EnglishService} from '../../service/english.service';
 import {English} from '../../service/english';
 import {Observable} from "rxjs";
-import {Vietnamese} from "../../service/vietnamese";
 import {VietnameseService} from "../../service/vietnamese.service";
-import {AbstractControl, FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {DialogEnglishDelete} from "../english-list/english-list.component";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-english-create',
