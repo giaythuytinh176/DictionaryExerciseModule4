@@ -44,15 +44,15 @@ export class VietnameseListComponent implements OnInit {
         data => {
           console.log(data);
           if ((data.status || []).indexOf('Token is Invalid') !== -1) {
-            this.toasrt.warning(data.status, 'Error happing while deleting!');
+            this.toasrt.warning(data.status, 'Error happing while deleting!', {progressAnimation: 'decreasing', timeOut: 3000});
           } else {
             this.reloadData();
-            this.toasrt.success('Deleted successfully', 'Xoá thành công');
+            this.toasrt.success('Deleted successfully', 'Xoá thành công', {progressAnimation: 'decreasing', timeOut: 3000});
           }
         },
         error => {
           console.log(error);
-          this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!');
+          this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!', {progressAnimation: 'decreasing', timeOut: 3000});
         });
   }
 

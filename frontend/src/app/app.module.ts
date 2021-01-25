@@ -56,6 +56,7 @@ import { HeaderComponent } from './backend/header/header.component';
 import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
 import {
+  DialogEnglishCreate,
   DialogEnglishDelete,
   EnglishListComponent
 } from './backend/component/english-list/english-list.component';
@@ -67,6 +68,7 @@ import {ProgressSpinnerOverviewExample} from './backend/component/progress-spinn
 import { VietnameseListComponent, DialogVietnameseDelete } from './backend/component/vietnamese-list/vietnamese-list.component';
 import { VietnameseCreateComponent } from './backend/component/vietnamese-create/vietnamese-create.component';
 import { VietnameseUpdateComponent } from './backend/component/vietnamese-update/vietnamese-update.component';
+import { LoginComponent } from './backend/component/login/login.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     VietnameseListComponent,
     VietnameseCreateComponent,
     VietnameseUpdateComponent,
-    DialogVietnameseDelete
+    DialogVietnameseDelete,
+    DialogEnglishCreate,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +96,6 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
     // meterial
     A11yModule,
