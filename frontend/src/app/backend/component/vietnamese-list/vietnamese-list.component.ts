@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Vietnamese} from '../../service/vietnamese';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from '@angular/material/dialog';
+import {MatPaginator} from "@angular/material/paginator";
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
