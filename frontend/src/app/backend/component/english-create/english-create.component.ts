@@ -88,7 +88,7 @@ export class EnglishCreateComponent implements OnInit {
           }
 
           // console.log(this.error_msg);
-          else if (this.error_msg) {
+          if (this.error_msg) {
             this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
               progressAnimation: 'decreasing',
               timeOut: 3000

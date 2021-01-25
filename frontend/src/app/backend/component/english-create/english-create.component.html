@@ -1,6 +1,11 @@
 <div class="container">
   <h1>Create English Dictionary</h1>
-  <div [hidden]="submitted">
+
+  <mat-error style="width: 100%;" align="center" *ngIf="error_msg !== ''">
+    <h2>{{error_msg}} . <a mat-raised-button routerLink="/admin/login" class="nav-link">Login</a></h2>
+  </mat-error>
+
+  <div [hidden]="submitted && !error_msg">
     <form class="example-form" [formGroup]="englishForm">
       <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>Name</mat-label>
@@ -53,12 +58,6 @@
 
   <div *ngIf="showLoadingBar === true">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
-
-  <div [hidden]="!submitted">
-<!--    <div class="error-msg" *ngIf="error_msg != ''">{{error_msg}}.-->
-<!--      <a routerLink="/login" class="nav-link">Login</a>-->
-<!--    </div>-->
   </div>
 
 </div>
