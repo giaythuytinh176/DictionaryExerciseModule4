@@ -1,21 +1,33 @@
 import {Observable} from 'rxjs';
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {English} from '../../service/english';
 import {EnglishService} from '../../service/english.service';
-import {EnglishCreateComponent} from "../english-create/english-create.component";
 import {VietnameseService} from "../../service/vietnamese.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TokenStorageService} from "../../service/token-storage.service";
+import {MatPaginator} from '@angular/material/paginator';
+import {HttpClient} from "@angular/common/http";
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface PeriodicElement {
+  id: number;
+  name: string;
+  type: string;
+  spelling: string;
+  description: string;
+  action: string;
+}
 
 @Component({
   selector: 'app-english-list',
   templateUrl: './english-list.component.html',
   styleUrls: ['./english-list.component.css']
 })
-export class EnglishListComponent implements OnInit {
+export class EnglishListComponent implements OnInit, AfterViewInit {
   englishs!: Observable<English[]>;
   id!: number;
   name!: string;
@@ -23,17 +35,71 @@ export class EnglishListComponent implements OnInit {
   spelling!: string;
   description!: string;
   error_msg = '';
+  data: any;
+  len: number;
+  ELEMENT_DATA!: PeriodicElement[];
+  dataSource!: any;
+  displayedColumns!: any;
+  selection!: any;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+  }
 
   constructor(private englishService: EnglishService,
               private router: Router,
               public dialog: MatDialog,
               private toasrt: ToastrService,
-              private tokenstorage: TokenStorageService
+              private tokenstorage: TokenStorageService,
+              private http: HttpClient
   ) {
+    this.http.get('http://localhost:8000/api/english').subscribe((res) => {
+      this.data = res;
+      this.len = this.data.length;
+      this.ELEMENT_DATA = this.data;
+
+      this.displayedColumns = ['select', 'id', 'name', 'type', 'spelling', 'description', 'action'];
+      this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+
+      this.dataSource.paginator = this.paginator;
+      this.selection = new SelectionModel<PeriodicElement>(true, []);
+
+      console.log(this.selection);
+      console.log(this.ELEMENT_DATA);
+      console.log(this.dataSource);
+      console.log(this.displayedColumns);
+    });
+  }
+
+  click(i: any): any {
+    console.log(i);
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
   ngOnInit(): void {
-    this.reloadData();
+    // this.reloadData();
   }
 
   reloadData(): void {
