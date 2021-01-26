@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Vietnamese} from '../../service/vietnamese';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, } from '@angular/material/dialog';
 import {MatPaginator} from "@angular/material/paginator";
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
@@ -9,6 +9,7 @@ import {VietnameseService} from '../../service/vietnamese.service';
 import {English} from '../../service/english';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EnglishService} from '../../service/english.service';
+import {TokenStorageService} from '../../service/token-storage.service';
 
 @Component({
   selector: 'app-vietnamese-list',
@@ -23,12 +24,15 @@ export class VietnameseListComponent implements OnInit {
   type!: string;
   spelling!: string;
   description!: string;
+  // tslint:disable-next-line:variable-name
+  error_msg = '';
 
 
   constructor(private vietnameseService: VietnameseService,
               private router: Router,
               public dialog: MatDialog,
               private toasrt: ToastrService,
+              private tokenstorage: TokenStorageService
   ) {
   }
 
@@ -42,30 +46,40 @@ export class VietnameseListComponent implements OnInit {
   }
 
   deleteVietnamese(id: number, name: string): void {
+    // @ts-ignore
     this.vietnameseService.deleteVietnamese(id)
       .subscribe(
-        data => {
-          console.log(data);
-          if ((data.status || []).indexOf('Token is Invalid') !== -1) {
-            this.toasrt.warning(data.status, 'Error happing while deleting!', {
-              progressAnimation: 'decreasing',
-              timeOut: 3000
+            data => {
+              if (data.status !== undefined && data.status !== 'undefined') {
+                if (data.status.includes('Authorization Token not found')) {
+                  this.error_msg = 'Authorization Token not found';
+                } else if (data.status.includes('Token is Invalid')) {
+                  this.error_msg = 'Token is Invalid';
+                } else if (data.status.includes('oken is Expire')) {
+                  this.error_msg = 'Token is Expired';
+                }
+              }
+              if (this.error_msg) {
+                this.tokenstorage.signOut();
+                this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
+                  progressAnimation: 'decreasing',
+                  timeOut: 3000
+                });
+              } else {
+                this.reloadData();
+                this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
+                  progressAnimation: 'decreasing',
+                  timeOut: 3000
+                });
+              }
+            },
+            error => {
+              console.log(error);
+              this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!', {
+                progressAnimation: 'decreasing',
+                timeOut: 3000
+              });
             });
-          } else {
-            this.reloadData();
-            this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
-              progressAnimation: 'decreasing',
-              timeOut: 3000
-            });
-          }
-        },
-        error => {
-          console.log(error);
-          this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!', {
-            progressAnimation: 'decreasing',
-            timeOut: 3000
-          });
-        });
   }
 
 
@@ -155,6 +169,13 @@ export class DialogVietnameseCreate implements OnInit {
   // toppings = new FormControl();
   vietnameseForm!: FormGroup;
   public vietnameseFormAttempt: boolean;
+  typeList = [
+    'Danh từ',
+    'Động từ',
+    'Tính từ',
+    'Trạng từ',
+    'Giới từ',
+  ];
 
   constructor(
     public dialogRef: MatDialogRef<DialogVietnameseCreate>,
@@ -164,7 +185,8 @@ export class DialogVietnameseCreate implements OnInit {
     private router: Router,
     private toasrt: ToastrService,
     private englishService: EnglishService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tokenstorage: TokenStorageService
   ) {
     // console.log(this.data);
   }
@@ -216,11 +238,13 @@ export class DialogVietnameseCreate implements OnInit {
               this.error_msg = 'Authorization Token not found';
             } else if (data.status.includes('Token is Invalid')) {
               this.error_msg = 'Token is Invalid';
+            } else if (data.status.includes('oken is Expire')) {
+              this.error_msg = 'Token is Expired';
             }
           }
-
           // console.log(this.error_msg);
-          else if (this.error_msg) {
+          if (this.error_msg) {
+            this.tokenstorage.signOut();
             this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
               progressAnimation: 'decreasing',
               timeOut: 3000

@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {TokenStorageService} from "./token-storage.service";
+import {TokenStorageService} from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,8 @@ export class VietnameseService {
   createVietnamese(vietnamese: object): Observable<object> {
     // @ts-ignore
     vietnamese.english = JSON.stringify(vietnamese.english) || [];
-    console.log(vietnamese);
+    // @ts-ignore
+    vietnamese.type = JSON.stringify(vietnamese.type) || [];
     return this.http.post(environment.apiUrl + '/vietnamese', vietnamese, { headers: this.reqHeader });
 
   }
