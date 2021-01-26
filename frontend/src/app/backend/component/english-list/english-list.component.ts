@@ -42,7 +42,11 @@ export class EnglishListComponent implements OnInit {
   }
 
   deleteEnglish(id: number, name: string): void {
-    this.englishService.deleteEnglish(id)
+    console.log("complete4");
+    // setTimeout( () => {
+    //   console.log(5555);
+    // }, 3000);
+    const subscription = this.englishService.deleteEnglish(id)
       .subscribe(
         data => {
           if (data.status !== undefined && data.status !== 'undefined') {
@@ -54,6 +58,7 @@ export class EnglishListComponent implements OnInit {
               this.error_msg = 'Token is Expired';
             }
           }
+          console.log(data);
           if (this.error_msg) {
             this.tokenstorage.signOut();
             this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
@@ -74,7 +79,17 @@ export class EnglishListComponent implements OnInit {
             progressAnimation: 'decreasing',
             timeOut: 3000
           });
+        }, () => {
+          console.log("complete1");
+          subscription.unsubscribe();
+          console.log("complete2");
         });
+    // setTimeout( () => {
+    //   console.log(5555);
+    //   subscription.unsubscribe();
+    //   console.log(6666);
+    // }, 5000);
+    console.log("complete3");
   }
 
   englishDetails(id: number): void {
