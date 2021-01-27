@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {VietnameseServiceService} from '../vietnamese-service.service';
 import {EnglishService} from "../service/english.service";
 import {Observable, Subject} from "rxjs";
 import {concatMap, distinctUntilChanged, switchMap, throttleTime} from "rxjs/operators";
@@ -14,6 +15,8 @@ export class IndexComponent implements OnInit {
   en = '';
   vi = '';
   // showResult = true;
+ searches!: any ;
+  english!: any;
   enableEn = false;
   enableVi = false;
   data!: any;
@@ -21,15 +24,12 @@ export class IndexComponent implements OnInit {
   textareaValue = '';
   nodata = '';
   word = '';
-
   search$ = new Subject<string>();
   searchResult$: Observable<any>;
-
-  constructor(
-    private englishServiceTranlsate: EnglishService,
-    private http: HttpClient
-  ) {
-  }
+  constructor(private vietnameseServiceService: VietnameseServiceService,
+              private englishServiceTranlsate: EnglishService,
+              private http: HttpClient
+  ) {}
 
   ngOnInit(): any {
     this.search$.pipe(
@@ -49,32 +49,39 @@ export class IndexComponent implements OnInit {
       });
   }
 
-  getValueEnglish(word: any) {
+  getValueEnglish(word: any): any {
     this.textareaValue = word.target.value;
     console.log(this.textareaValue);
     console.log(this.en);
-    // this.englishServiceTranlsate.tranlsateEnglish(this.textareaValue).subscribe((res) => {
-    //   this.data = res;
-    //   this.enableEn = true;
-    //   console.log(this.data);
-    // }, (error) => {
-    //   console.log(error);
-    // });
-
     this.vnlist = this.englishServiceTranlsate.tranlsateEnglish(this.textareaValue);
     this.enableEn = true;
     console.log(this.vnlist);
-
-    //console.log(this.textareaValue);
-    // console.log(this.data);
-
+  }
+  onInput(event): any{
+  this.searches = event.target.value;
+  this.loadData();
   }
 
   json2array(json) {
-    return Object.keys(json).map((key) => [key, json[key]]);;
+    return Object.keys(json).map((key) => [key, json[key]]);
+  }
+
+  loadData(): any
+  {
+    this.vietnameseServiceService.afterTranslate(this.searches).subscribe(
+      data => {
+        this.english = data;
+        console.log(this.english)
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   getValueVietnamese($event: Event) {
 
   }
 }
+
+
