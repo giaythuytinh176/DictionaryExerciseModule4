@@ -9,17 +9,7 @@
           Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <br>
-      <br>
-      <mat-form-field class="example-full-width">
-        <mat-label>English</mat-label>
-        <mat-select formControlName="english" multiple>
-          <mat-option *ngFor="let english of (englishs | async) ; let i = index" [value]="english.id">{{english.name}}</mat-option>
-        </mat-select>
-        <mat-error *ngIf="vietnameseForm.get('english')!.invalid && vietnameseForm.get('english')!.touched  || (vietnameseForm.get('english').untouched && vietnameseFormAttempt)">
-          English is required
-        </mat-error>
-      </mat-form-field>
+
       <br>
       <br>
       <mat-form-field appearance="fill" class="example-full-width">

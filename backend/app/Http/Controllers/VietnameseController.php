@@ -6,6 +6,7 @@ use App\Models\English;
 use App\Models\Vietnamese;
 use App\Services\VietnameseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VietnameseController extends Controller
 {
@@ -42,9 +43,9 @@ class VietnameseController extends Controller
     {
         $dataVietnamese = $this->vietnameseService->create($request->all());
 
-        foreach (json_decode($request->english, true) as $vn) {
-            English::find($vn)->vietnameses()->attach($dataVietnamese['vietnameses']->id);
-        }
+        // foreach (json_decode($request->english, true) as $vn) {
+        //     English::find($vn)->vietnameses()->attach($dataVietnamese['vietnameses']->id);
+        // }
         return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
 
     }
@@ -62,4 +63,13 @@ class VietnameseController extends Controller
 
         return response()->json($dataVietnamese['message'], $dataVietnamese['statusCode']);
     }
+    public function foundWord(Request $request)
+    {
+        $word = $request->search;
+        $data = English::whereHas('vietnameses', function ($q) use ($word) {
+            $q->where("vietnameses.name", '=', $word);
+        })->get();
+        return response()->json($data,200);
+    }
 }
+
