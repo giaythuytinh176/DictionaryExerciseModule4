@@ -199,21 +199,6 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
       // this.animal = result;
     });
   }
-  openDialog2(id: number): void {
-    const dialogRef = this.dialog.open(DialogEnglishEdit, {
-      data: {id: id}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
-      // console.log(id);
-      if (result) {
-        console.log(result);
-        // this.deleteEnglish(id, name);
-      }
-      // console.log(this);
-      // this.animal = result;
-    });
-  }
 }
 
 @Component({
@@ -241,73 +226,6 @@ export interface DialogData {
   name: string;
   type: string;
   vietnamese: any;
-  spelling: string;
-  description: string;
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'dialog-english-edit',
-  templateUrl: 'dialog-english-edit.html',
-})
-// tslint:disable-next-line:component-class-suffix
-export class DialogEnglishEdit {
-  english: English = new English();
-  submitted1 = false;
-  // tslint:disable-next-line:variable-name
-  error_msg = '';
-  showLoadingBar = false;
-  vietnameses!: Observable<any>;
-  // toppings = new FormControl();
-  englishForm1!: FormGroup;
-  public englishFormAttempt1: boolean;
-  typeList = [
-    'Danh từ',
-    'Động từ',
-    'Tính từ',
-    'Trạng từ',
-    'Giới từ',
-  ];
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogEnglishEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
-    private EnglishService: EnglishService,
-    private router: Router,
-    private toasrt: ToastrService,
-    private vietnameseService: VietnameseService,
-    private fb: FormBuilder,
-    private tokenstorage: TokenStorageService
-  ) {
-    this.vietnameses = this.vietnameseService.getVietnamesesList();
-    this.EnglishService.getEnglish(data.id).subscribe( (res) => {
-     this.english = res;
-     console.log(this.english);
-   });
-    console.log(this.data);
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onSubmit1() {
-    this.englishFormAttempt1 = true;
-    this.submitted1 = true;
-    // this.save();
-  }
-
-  reset() {
-    this.englishForm1.reset();
-    this.englishFormAttempt1 = false;
-  }
-}
-
-export interface DialogDataEdit {
-  id: number;
-  name: string;
-  vietnamese: string;
-  type: string;
   spelling: string;
   description: string;
 }

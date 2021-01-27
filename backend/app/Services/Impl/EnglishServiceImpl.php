@@ -7,6 +7,7 @@
  */
 namespace App\Services\Impl;
 
+use App\Models\Vietnamese;
 use App\Repositories\EnglishRepository;
 use App\Services\EnglishService;
 
@@ -68,6 +69,8 @@ class EnglishServiceImpl implements EnglishService
             $newEnglish = null;
             $statusCode = 404;
         } else {
+            $oldEnglish->vietnameses()->detach();
+            $request['type'] = implode(", ", json_decode($request['type'], true));
             $newEnglish = $this->englishRepository->update($request, $oldEnglish);
             $statusCode = 200;
         }

@@ -57,7 +57,7 @@ import { FooterComponent } from './backend/footer/footer.component';
 import { SidebarComponent } from './backend/sidebar/sidebar.component';
 import {
   DialogEnglishCreate,
-  DialogEnglishDelete, DialogEnglishEdit,
+  DialogEnglishDelete,
   EnglishListComponent
 } from './backend/component/english-list/english-list.component';
 import {
@@ -106,7 +106,6 @@ import { DropzoneDirective } from './dropzone.directive';
     LoginComponent,
     IndexComponent,
     DialogVietnameseCreate,
-    DialogEnglishEdit,
     FirebaseComponent,
     DropzoneDirective
   ],

@@ -59,7 +59,9 @@ class EnglishController extends Controller
     public function update(Request $request, $id)
     {
         $dataEnglish = $this->englishService->update($request->all(), $id);
-
+        foreach (json_decode($request->vietnamese, true) as $vn) {
+            Vietnamese::find($vn)->englishs()->attach($id);
+        }
         return response()->json($dataEnglish['englishs'], $dataEnglish['statusCode']);
     }
 
