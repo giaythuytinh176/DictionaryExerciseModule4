@@ -35,8 +35,6 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   spelling!: string;
   description!: string;
   error_msg = '';
-  data: any;
-  len: number;
   ELEMENT_DATA!: PeriodicElement[];
   dataSource!: any;
   displayedColumns!: any;
@@ -54,21 +52,16 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
               private tokenstorage: TokenStorageService,
               private http: HttpClient
   ) {
-    this.http.get('http://localhost:8000/api/english').subscribe((res) => {
-      this.data = res;
-      this.len = this.data.length;
-      this.ELEMENT_DATA = this.data;
+    this.reloagPage();
+  }
 
+  reloagPage() {
+    this.englishService.getEnglishsList().subscribe((res) => {
       this.displayedColumns = ['select', 'id', 'name', 'type', 'spelling', 'description', 'action'];
+      this.ELEMENT_DATA = res;
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
-
       this.dataSource.paginator = this.paginator;
       this.selection = new SelectionModel<PeriodicElement>(true, []);
-
-      console.log(this.selection);
-      console.log(this.ELEMENT_DATA);
-      console.log(this.dataSource);
-      console.log(this.displayedColumns);
     });
   }
 
@@ -99,12 +92,12 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // this.reloadData();
   }
 
   reloadData(): void {
-    this.englishs = this.englishService.getEnglishsList();
-    // console.log(this.employees);
+    this.englishService.getEnglishsList().subscribe((res) => {
+
+    });
   }
 
   deleteEnglish(id: number, name: string): void {
@@ -132,7 +125,8 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
               timeOut: 3000
             });
           } else {
-            this.reloadData();
+            //this.reloadData();
+            this.reloagPage();
             this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
               progressAnimation: 'decreasing',
               timeOut: 3000
@@ -175,7 +169,8 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
       // console.log('The dialog was closed');
       // console.log(id);
       if (result) {
-        this.reloadData();
+        //this.reloadData();
+        this.reloagPage();
         console.log(result);
         //this.deleteEnglish(id, name);
       }

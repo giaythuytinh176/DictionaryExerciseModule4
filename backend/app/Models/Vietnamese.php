@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Vietnamese extends Model
 {
     use HasFactory;
-    protected $fillable=[
+
+    protected $fillable = [
         'name',
         'type',
         'spelling',
         'description',
     ];
-    public function englishs(){
+
+    public function englishs()
+    {
         return $this->belongsToMany(English::class, 'english_vietnamese', 'vietnamese_id', 'english_id');
     }
 }

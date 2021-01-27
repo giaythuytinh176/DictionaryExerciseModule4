@@ -16,6 +16,15 @@ class EnglishController extends Controller
         $this->englishService = $englishService;
     }
 
+    public function findWord(Request $request)
+    {
+        $word = $request->word;
+        $data = Vietnamese::whereHas("englishs", function (\Illuminate\Database\Eloquent\Builder $builder) use ($word) {
+            $builder->where('englishes.name', '=', $word);
+        })->get();
+        return response()->json($data, 200);
+    }
+
     public function search(Request $request)
     {
         $englishs = English::where('first_name', 'like', '%' . $request->first_name . '%')->get();
