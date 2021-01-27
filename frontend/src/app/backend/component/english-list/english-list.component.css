@@ -13,3 +13,11 @@ table {
   margin-bottom: 25px;
   font-size: 14px;
 }
+
+.mat-column-select {
+  overflow: initial;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}

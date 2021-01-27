@@ -236,7 +236,6 @@ export class DialogVietnameseCreate implements OnInit {
     this.vietnameseForm = this.fb.group({
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],
-      english: ['', [Validators.required]],
       spelling: ['', [Validators.required]],
       description: ['', [Validators.required]],
     });

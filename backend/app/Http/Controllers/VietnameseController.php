@@ -43,9 +43,9 @@ class VietnameseController extends Controller
     {
         $dataVietnamese = $this->vietnameseService->create($request->all());
 
-        foreach (json_decode($request->english, true) as $vn) {
-            English::find($vn)->vietnameses()->attach($dataVietnamese['vietnameses']->id);
-        }
+        // foreach (json_decode($request->english, true) as $vn) {
+        //     English::find($vn)->vietnameses()->attach($dataVietnamese['vietnameses']->id);
+        // }
         return response()->json($dataVietnamese['vietnameses'], $dataVietnamese['statusCode']);
 
     }
@@ -65,13 +65,11 @@ class VietnameseController extends Controller
     }
     public function foundWord(Request $request)
     {
-        $word = $request->input('search');
+        $word = $request->search;
         $data = English::whereHas('vietnameses', function ($q) use ($word) {
             $q->where("vietnameses.name", '=', $word);
         })->get();
         return response()->json($data,200);
-
-
     }
 }
 

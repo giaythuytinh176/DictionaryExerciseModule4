@@ -75,6 +75,16 @@ import { VietnameseUpdateComponent } from './backend/component/vietnamese-update
 import { LoginComponent } from './backend/component/login/login.component';
 import {NgxTinymceModule} from "ngx-tinymce";
 import { IndexComponent } from './frontend/index/index.component';
+import { FirebaseComponent } from './backend/component/firebase/firebase.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -94,13 +104,13 @@ import { IndexComponent } from './frontend/index/index.component';
     DialogEnglishCreate,
     LoginComponent,
     IndexComponent,
-    DialogVietnameseCreate
+    DialogVietnameseCreate,
+    FirebaseComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -153,7 +163,11 @@ import { IndexComponent } from './frontend/index/index.component';
     NgxTinymceModule,
     NgxTinymceModule.forRoot({
       baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/',
-    })
+    }),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, "cloud"),
   ],
   providers: [],
   bootstrap: [AppComponent]
