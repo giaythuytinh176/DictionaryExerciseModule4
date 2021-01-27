@@ -85,6 +85,7 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask,
 } from "@angular/fire/storage";
+import { DropzoneDirective } from './dropzone.directive';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import {
     LoginComponent,
     IndexComponent,
     DialogVietnameseCreate,
-    FirebaseComponent
+    FirebaseComponent,
+    DropzoneDirective
   ],
   imports: [
     BrowserModule,
