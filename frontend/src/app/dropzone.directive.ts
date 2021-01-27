@@ -1,7 +1,7 @@
 import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[appDropzone]'
+  selector: '[dropzone]'
 })
 export class DropzoneDirective {
 

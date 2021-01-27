@@ -1,11 +1,57 @@
+
+
+
+
+<div class="dropzone"
+     dropzone
+     (hovered)="toggleHover($event)"
+     (dropped)="startUpload($event)"
+     [class.hovering]="isHovering">
+  <h3>AngularFire Drop Zone</h3>
+  <p>Drag and Drop a File</p>
+  <div class="file">
+    <label class="file-label">
+      <input class="file-input" type="file" (change)="startUpload($event.target.files)">
+      <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span>
+            <span class="file-label">
+              or choose a file…
+            </span>
+          </span>
+    </label>
+  </div>
+</div>
+
+
+
+
+
+
 <div class="form-group col-12">
-  <input type="file"
+  <label class="label-input" for="file">
+    <div *ngIf="fileToUpload; else NoSelect">
+      Filename: {{ fileToUpload.name }}
+    </div>
+    <ng-template #NoSelect>
+      Choose File
+    </ng-template>
+  <input multiple class="form-control" type="file"
          id="file"
          #userPhoto
-         (change)="onFileSelected($event)"
+         (change)="handleFileInput($event)"
          name="image"
          autocomplete="off"
   />
+  </label>
+
+  <br>
+<!--  <button (click)="UploadFile()" mat-icon-button>-->
+<!--  <mat-icon>arrow_upward</mat-icon>-->
+<!--  </button>-->
+  <button mat-raised-button color="primary" (click)="UploadFile()">Submit</button>
+  <br>
 <!--  <div>{{ uploadPercent | async }}</div>-->
   <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
 
@@ -41,6 +87,7 @@
     <button (click)="task.pause()" class="button btn-warning" [disabled]="!isActive(snap)">Pause</button>
     <button (click)="task.cancel()" class="button btn-danger" [disabled]="!isActive(snap)">Cancel</button>
     <button (click)="task.resume()" class="button btn-info" [disabled]="!(snap?.state === 'paused')">Resume</button>
+    <button (click)="reset()" class="button btn-reset">Reset</button>
 
   </div>
 </div>

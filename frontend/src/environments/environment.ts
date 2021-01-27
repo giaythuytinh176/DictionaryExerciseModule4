@@ -10,7 +10,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: "AIzaSyBBjVystZ5NskbWkWsuBdtLh6ntZdiAQqg",
     authDomain: "dataimagemusic.firebaseapp.com",
-    // databaseURL: 'https://dataimagemusic-default-rtdb.firebaseio.com/',
+    databaseURL: "https://dataimagemusic-default-rtdb.firebaseio.com",
     projectId: "dataimagemusic",
     storageBucket: "dataimagemusic.appspot.com",
     messagingSenderId: "1066682814538",
