@@ -23,7 +23,7 @@ Route::get('/vietnamese', 'VietnameseController@index')->name('vietnamese.all');
 Route::get('/vietnamese/{id}', 'VietnameseController@show')->name('vietnamese.show');
 Route::get('/english', 'EnglishController@index')->name('english.all');
 Route::get('/english/{id}', 'EnglishController@show')->name('english.show');
-
+Route::post('/translate', 'EnglishController@findWord');
 
 // jwt-open api
 // Route::post('register', 'UserController@register');

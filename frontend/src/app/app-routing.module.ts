@@ -8,6 +8,7 @@ import {VietnameseListComponent} from './backend/component/vietnamese-list/vietn
 import {VietnameseCreateComponent} from './backend/component/vietnamese-create/vietnamese-create.component';
 import {LoginComponent} from "./backend/component/login/login.component";
 import {IndexComponent} from "./frontend/index/index.component";
+import {FirebaseComponent} from "./backend/component/firebase/firebase.component";
 
 const routes: Routes = [
   {path: '', component: IndexComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'admin/english/update/:id', component: EnglishUpdateComponent},
   {path: 'admin', component: EnglishListComponent},
   {path: 'admin/login', component: LoginComponent},
+  {path: 'admin/upload', component: FirebaseComponent},
 ];
 
 @NgModule({

@@ -20,18 +20,45 @@
     <div class="col-6 mt-5 col-md-6">
       <mat-card>
         <mat-card-content>
-          <textarea rows="5" matInput [(ngModel)]="en" placeholder="English"></textarea>
+          <div class="col-6 col-md-6">
+            <!--            <textarea rows="1" matInput [value]="vi" (change)="getValueEnglish($event)" placeholder="English ..."></textarea>-->
+            <input type="text" (input)="search$.next($event.target.value)" placeholder="English ...">
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="col-6 mt-5 col-md-6">
       <mat-card>
         <mat-card-content>
-          <textarea rows="5" matInput [(ngModel)]="vi" placeholder="Vietnamese"></textarea>
+          <div class="col-6 col-md-6">
+            <!--            <textarea rows="1" matInput [value]="en" (change)="getValueVietnamese($event)" placeholder="Vietnamese ...">-->
+            <!--            </textarea>-->
+            <input type="text" [(ngModel)]="vi" placeholder="Vietnamese ...">
+            <div *ngIf="enableEn">
+              <h1>
+                <div *ngFor="let vn of vnlist; let i = index">
+                  <div *ngIf="vn.name">
+                    {{ vn.name }}
+                  </div>
+                </div>
+
+              </h1>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
 
+    <!--    <div class="col-6 mt-5 col-md-6">-->
+    <!--      <mat-card>-->
+    <!--        <mat-card-content>-->
+    <!--          <div class="col-6 col-md-6">-->
+    <!--            {{ name }}>-->
+    <!--            <input type="text" (input)="search$.next($event.target.value)">-->
+    <!--          </div>-->
+    <!--        </mat-card-content>-->
+    <!--      </mat-card>-->
+    <!--    </div>-->
     <!--    <div *ngIf="showResult" class="col-lg-6 mt-5" style="float:none;margin:auto;">-->
     <!--      <mat-card>-->
     <!--        <mat-card-content>-->
@@ -41,3 +68,5 @@
     <!--    </div>-->
   </div>
 </div>
+
+
