@@ -1,0 +1,11 @@
+<div class="form-group col-12">
+  <input type="file"
+         id="file"
+         #userPhoto
+         (change)="onFileSelected($event)"
+         name="image"
+         autocomplete="off"
+  />
+  <div>{{ uploadPercent | async }}</div>
+  <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+</div>

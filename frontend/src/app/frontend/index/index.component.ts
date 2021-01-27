@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EnglishService} from "../service/english.service";
 import {Observable, Subject} from "rxjs";
-import {concatMap, debounceTime, distinctUntilChanged, switchMap, throttleTime} from "rxjs/operators";
+import {concatMap, distinctUntilChanged, switchMap, throttleTime} from "rxjs/operators";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
@@ -19,6 +19,8 @@ export class IndexComponent implements OnInit {
   data!: any;
   vnlist!: any;
   textareaValue = '';
+  nodata = '';
+  word = '';
 
   search$ = new Subject<string>();
   searchResult$: Observable<any>;
@@ -33,15 +35,17 @@ export class IndexComponent implements OnInit {
     this.search$.pipe(
       throttleTime(300),
       distinctUntilChanged(),
-      //concatMap(value => {
-      switchMap(value => {
+      concatMap(value => {
+      //switchMap(value => {
+        this.word = value;
         return this.http.post(environment.apiUrl + '/translate', {word: value}) || [];
       })
     ).subscribe(
       (next) => {
-        this.vnlist = JSON.stringify(next) || [] ;
+        this.vnlist = next || [];
         this.enableEn = true;
         console.log(next);
+        // console.log(JSON.parse(this.vnlist));
       });
   }
 
@@ -66,6 +70,9 @@ export class IndexComponent implements OnInit {
 
   }
 
+  json2array(json) {
+    return Object.keys(json).map((key) => [key, json[key]]);;
+  }
 
   getValueVietnamese($event: Event) {
 
