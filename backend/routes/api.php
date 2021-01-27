@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VietnameseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::get('/vietnamese/{id}', 'VietnameseController@show')->name('vietnamese.sh
 Route::get('/english', 'EnglishController@index')->name('english.all');
 Route::get('/english/{id}', 'EnglishController@show')->name('english.show');
 
+Route::post('/translate',[VietnameseController::class,'foundWord']);
 
 // jwt-open api
 // Route::post('register', 'UserController@register');

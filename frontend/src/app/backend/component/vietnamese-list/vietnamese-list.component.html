@@ -1,33 +1,72 @@
-<button mat-raised-button color="primary" (click)="openDialogCreate()">Add New Word</button>
-<br>
-<br>
-<div class="table-responsive">
-  <table class="table table-bordered" width="100%" cellspacing="0">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Nane</th>
-      <th>Type</th>
-      <th>spelling</th>
-      <th>description</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let vietnamese of (vietnameses | async) ; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{vietnamese.name}}</td>
-      <td>{{vietnamese.type}}</td>
-      <td>{{vietnamese.spelling}}</td>
-      <td>{{vietnamese.description}}</td>
-      <td>
-        <a routerLink="/admin/vietnamese/update/{{vietnamese.id}}" class="btn btn-warning">Edit</a>
-        <button (click)="openDialog(vietnamese.id, vietnamese.name, vietnamese.type)" class="btn btn-danger"
-                style="margin-left: 10px">Delete
-        </button>
-      </td>
-    </tr>
-    </tbody>
+<!--<button mat-raised-button color="primary" (click)="openDialogCreate()">Add New Word</button>-->
+<!--<br>-->
+<!--<br>-->
+<!--<div class="table-responsive">-->
+<!--  <table class="table table-bordered" width="100%" cellspacing="0" mat-table [dataSource]="dataSource">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>#</th>-->
+<!--      <th>Nane</th>-->
+<!--      <th>Type</th>-->
+<!--      <th>spelling</th>-->
+<!--      <th>description</th>-->
+<!--      <th>Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr *ngFor="let vietnamese of dataSource  ; let i = index">-->
+<!--      <td>{{ i + 1 }}</td>-->
+<!--      <td>{{vietnamese.name}}</td>-->
+<!--      <td>{{vietnamese.type}}</td>-->
+<!--      <td>{{vietnamese.spelling}}</td>-->
+<!--      <td>{{vietnamese.description}}</td>-->
+<!--      <td>-->
+<!--        <a routerLink="/admin/vietnamese/update/{{vietnamese.id}}" class="btn btn-warning">Edit</a>-->
+<!--        <button (click)="openDialog(vietnamese.id, vietnamese.name, vietnamese.type)" class="btn btn-danger"-->
+<!--                style="margin-left: 10px">Delete-->
+<!--        </button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons ]></mat-paginator>-->
+<!--</div>-->
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Weight </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="spelling">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element"> {{element.spelling}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-<!--  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons ]></mat-paginator>-->
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

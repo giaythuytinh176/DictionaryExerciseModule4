@@ -36,14 +36,15 @@ export class VietnameseService {
   }
 
   updateVietnamese(id: number, value: any): Observable<object> {
-    return this.http.put(environment.apiUrl + `/vietnamese/${id}`, value);
+    return this.http.put(environment.apiUrl + `/vietnamese/${id}`, value, { headers: this.reqHeader });
   }
 
   deleteVietnamese(id: number): Observable<any> {
-    return this.http.delete(environment.apiUrl + `/vietnamese/${id}`);
+    return this.http.delete(environment.apiUrl + `/vietnamese/${id}`,{ headers: this.reqHeader });
   }
 
-  getVietnamesesList(): Observable<any> {
+  // tslint:disable-next-line:typedef
+  getVietnamesesList(): any{
     return this.http.get(environment.apiUrl + '/vietnamese');
   }
 

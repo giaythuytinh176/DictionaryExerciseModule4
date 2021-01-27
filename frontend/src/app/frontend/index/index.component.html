@@ -20,14 +20,16 @@
     <div class="col-6 mt-5 col-md-6">
       <mat-card>
         <mat-card-content>
-          <textarea rows="5" matInput [(ngModel)]="en" placeholder="English"></textarea>
+          <textarea rows="5" matInput (input)= "onInput($event)" placeholder="English"></textarea>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="col-6 mt-5 col-md-6">
       <mat-card>
         <mat-card-content>
-          <textarea rows="5" matInput [(ngModel)]="vi" placeholder="Vietnamese"></textarea>
+          <tr *ngFor="let value of english">
+            <td>{{value.name}}</td>
+          </tr>
         </mat-card-content>
       </mat-card>
     </div>

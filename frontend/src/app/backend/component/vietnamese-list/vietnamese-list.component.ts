@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Vietnamese} from '../../service/vietnamese';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, } from '@angular/material/dialog';
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator} from '@angular/material/paginator';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
@@ -10,6 +10,15 @@ import {English} from '../../service/english';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EnglishService} from '../../service/english.service';
 import {TokenStorageService} from '../../service/token-storage.service';
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface PeriodicElement {
+  name: string;
+  english: string;
+  type: string;
+  spelling: string;
+  description: string;
+}
 
 @Component({
   selector: 'app-vietnamese-list',
@@ -17,6 +26,8 @@ import {TokenStorageService} from '../../service/token-storage.service';
   styleUrls: ['./vietnamese-list.component.css']
 })
 export class VietnameseListComponent implements OnInit {
+
+
 
   vietnameses!: Observable<Vietnamese[]>;
   id!: number;
@@ -26,7 +37,9 @@ export class VietnameseListComponent implements OnInit {
   description!: string;
   // tslint:disable-next-line:variable-name
   error_msg = '';
-
+  ELEMENT_DATA!: PeriodicElement;
+  dataSource!: any;
+  displayedColumns!: any;
 
   constructor(private vietnameseService: VietnameseService,
               private router: Router,
@@ -36,50 +49,71 @@ export class VietnameseListComponent implements OnInit {
   ) {
   }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+
   ngOnInit(): void {
     this.reloadData();
+
+    this.ELEMENT_DATA  = this.dataSource;
+    // @ts-ignore
+    this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+
+    this.displayedColumns = ['id', 'name', 'type', 'spelling', 'description'];
+    this.dataSource.paginator = this.paginator;
+
+    // @ts-ignore
   }
 
+
   reloadData(): void {
-    this.vietnameses = this.vietnameseService.getVietnamesesList();
-    // console.log(this.employees);
+    this.vietnameseService.getVietnamesesList().subscribe(
+      data => {
+        this.dataSource = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    // this.vietnameses = this.vietnameseService.getVietnamesesList();
+    // // console.log(this.employees);
   }
 
   deleteVietnamese(id: number, name: string): void {
     // @ts-ignore
     this.vietnameseService.deleteVietnamese(id)
       .subscribe(
-            data => {
-              if (data.status !== undefined && data.status !== 'undefined') {
-                if (data.status.includes('Authorization Token not found')) {
-                  this.error_msg = 'Authorization Token not found';
-                } else if (data.status.includes('Token is Invalid')) {
-                  this.error_msg = 'Token is Invalid';
-                } else if (data.status.includes('oken is Expire')) {
-                  this.error_msg = 'Token is Expired';
-                }
-              }
-              if (this.error_msg) {
-                this.tokenstorage.signOut();
-                this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
-                  progressAnimation: 'decreasing',
-                  timeOut: 3000
-                });
-              } else {
-                this.reloadData();
-                this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
-                  progressAnimation: 'decreasing',
-                  timeOut: 3000
-                });
-              }
-            },
-            error => {
-              console.log(error);
-              this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!', {
-                progressAnimation: 'decreasing',
-                timeOut: 3000
-              });
+        data => {
+          if (data.status !== undefined && data.status !== 'undefined') {
+            if (data.status.includes('Authorization Token not found')) {
+              this.error_msg = 'Authorization Token not found';
+            } else if (data.status.includes('Token is Invalid')) {
+              this.error_msg = 'Token is Invalid';
+            } else if (data.status.includes('oken is Expire')) {
+              this.error_msg = 'Token is Expired';
+            }
+          }
+          if (this.error_msg) {
+            this.tokenstorage.signOut();
+            this.toasrt.warning(this.error_msg, 'Error happing while adding!', {
+              progressAnimation: 'decreasing',
+              timeOut: 3000
             });
+          } else {
+            this.reloadData();
+            this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
+              progressAnimation: 'decreasing',
+              timeOut: 3000
+            });
+          }
+        },
+        error => {
+          console.log(error);
+          this.toasrt.warning('Có lỗi xảy ra, không thể xoá được file.', 'Error happing while deleting!', {
+            progressAnimation: 'decreasing',
+            timeOut: 3000
+          });
+        });
   }
 
 
@@ -102,7 +136,7 @@ export class VietnameseListComponent implements OnInit {
       if (result) {
         this.reloadData();
         console.log(result);
-        //this.deleteEnglish(id, name);
+        // this.deleteEnglish(id, name);
       }
       // console.log(this);
       // this.animal = result;
@@ -111,7 +145,7 @@ export class VietnameseListComponent implements OnInit {
 
   openDialog(id: number, name: string, type: string, spelling?: string, description?: string): void {
     const dialogRef = this.dialog.open(DialogVietnameseDelete, {
-      data: {id: id, name: name, type: type, spelling: spelling, description: description}
+      data: {id, name, type, spelling, description}
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
@@ -198,7 +232,7 @@ export class DialogVietnameseCreate implements OnInit {
 
   ngOnInit(): void {
     this.englishs = this.englishService.getEnglishsList();
-    //console.log(this.vietnameses);
+    // console.log(this.vietnameses);
     this.vietnameseForm = this.fb.group({
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],
