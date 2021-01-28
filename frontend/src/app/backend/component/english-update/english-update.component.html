@@ -1,6 +1,5 @@
 <div class="container">
   <h3>Update English</h3>
-  <div style="width: 400px;">
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label>Name</label>
@@ -28,11 +27,12 @@
 
       <div class="form-group">
         <label>Description</label>
-        <input type="text" class="form-control" required [(ngModel)]="english.description" name="description" id="description">
+        <textarea rows="10" class="form-control" required [(ngModel)]="english.description" name="description" id="description"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-success">Submit</button>
+      <div style="text-align: center">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
     </form>
-  </div>
 
 </div>

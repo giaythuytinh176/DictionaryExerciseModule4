@@ -5,13 +5,14 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {ToastrService} from 'ngx-toastr';
 import {English} from '../../service/english';
 import {EnglishService} from '../../service/english.service';
-import {VietnameseService} from "../../service/vietnamese.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {TokenStorageService} from "../../service/token-storage.service";
+import {VietnameseService} from '../../service/vietnamese.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {TokenStorageService} from '../../service/token-storage.service';
 import {MatPaginator} from '@angular/material/paginator';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
 
 export interface PeriodicElement {
   id: number;
@@ -43,7 +44,9 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   vietnameses!: Observable<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
+  // tslint:disable-next-line:typedef
   ngAfterViewInit() {
   }
 
@@ -65,6 +68,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
       this.selection = new SelectionModel<PeriodicElement>(true, []);
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -76,6 +80,8 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
+    // console.log(numRows);
+    // console.log(numSelected);
     return numSelected === numRows;
   }
 
@@ -106,7 +112,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   }
 
   deleteEnglish(id: number, name: string): void {
-    console.log("complete4");
+    console.log('complete4');
     // setTimeout( () => {
     //   console.log(5555);
     // }, 3000);
@@ -130,7 +136,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
               timeOut: 3000
             });
           } else {
-            //this.reloadData();
+            // this.reloadData();
             this.reloagPage();
             this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
               progressAnimation: 'decreasing',
@@ -145,16 +151,16 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
             timeOut: 3000
           });
         }, () => {
-          console.log("complete1");
+          console.log('complete1');
           subscription.unsubscribe();
-          console.log("complete2");
+          console.log('complete2');
         });
     // setTimeout( () => {
     //   console.log(5555);
     //   subscription.unsubscribe();
     //   console.log(6666);
     // }, 5000);
-    console.log("complete3");
+    console.log('complete3');
   }
 
   englishDetails(id: number): void {
@@ -174,10 +180,10 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
       // console.log('The dialog was closed');
       // console.log(id);
       if (result) {
-        //this.reloadData();
+        // this.reloadData();
         this.reloagPage();
         console.log(result);
-        //this.deleteEnglish(id, name);
+        // this.deleteEnglish(id, name);
       }
       // console.log(this);
       // this.animal = result;
@@ -186,7 +192,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
 
   openDialog(id: number, name: string, type: string, spelling?: string, description?: string): void {
     const dialogRef = this.dialog.open(DialogEnglishDelete, {
-      data: {id: id, name: name, type: type, spelling: spelling, description: description}
+      data: {id, name, type, spelling, description}
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
@@ -274,7 +280,7 @@ export class DialogEnglishCreate implements OnInit {
 
   ngOnInit(): void {
     this.vietnameses = this.vietnameseService.getVietnamesesList();
-    //console.log(this.vietnameses);
+    // console.log(this.vietnameses);
     this.englishForm = this.fb.group({
       name: ['', [Validators.required]],
       type: ['', [Validators.required]],

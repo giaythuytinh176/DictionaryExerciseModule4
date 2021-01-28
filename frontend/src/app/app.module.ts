@@ -87,6 +87,8 @@ import {
 } from "@angular/fire/storage";
 import { DropzoneDirective } from './dropzone.directive';
 import { FileSizePipe } from './file-size.pipe';
+import { UploaderComponent } from './backend/component/uploader/uploader.component';
+import { UploadTaskComponent } from './backend/component/upload-task/upload-task.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,9 @@ import { FileSizePipe } from './file-size.pipe';
     DialogVietnameseCreate,
     FirebaseComponent,
     DropzoneDirective,
-    FileSizePipe
+    FileSizePipe,
+    UploaderComponent,
+    UploadTaskComponent
   ],
   imports: [
     BrowserModule,
