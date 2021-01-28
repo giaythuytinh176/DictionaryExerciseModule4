@@ -86,9 +86,9 @@ import {
   AngularFireUploadTask,
 } from "@angular/fire/storage";
 import { DropzoneDirective } from './dropzone.directive';
-import { FileSizePipe } from './file-size.pipe';
 import { UploaderComponent } from './backend/component/uploader/uploader.component';
 import { UploadTaskComponent } from './backend/component/upload-task/upload-task.component';
+import {FileSizePipe} from "./file-size.pipe";
 
 @NgModule({
   declarations: [
@@ -113,7 +113,7 @@ import { UploadTaskComponent } from './backend/component/upload-task/upload-task
     DropzoneDirective,
     FileSizePipe,
     UploaderComponent,
-    UploadTaskComponent
+    UploadTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -177,7 +177,13 @@ import { UploadTaskComponent } from './backend/component/upload-task/upload-task
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, "cloud"),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    FileSizePipe,
+    UploadTaskComponent,
+    UploaderComponent
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
