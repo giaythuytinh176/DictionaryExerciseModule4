@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Vietnamese} from '../../service/vietnamese';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
@@ -11,13 +11,19 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EnglishService} from '../../service/english.service';
 import {TokenStorageService} from '../../service/token-storage.service';
 import {MatTableDataSource} from '@angular/material/table';
+import {HttpClient} from "@angular/common/http";
+import {SelectionModel} from '@angular/cdk/collections';
+
 
 export interface PeriodicElement {
+  id: number;
   name: string;
   english: string;
   type: string;
   spelling: string;
   description: string;
+  action: string;
+
 }
 
 @Component({
@@ -26,9 +32,6 @@ export interface PeriodicElement {
   styleUrls: ['./vietnamese-list.component.css']
 })
 export class VietnameseListComponent implements OnInit {
-
-
-
   vietnameses!: Observable<Vietnamese[]>;
   id!: number;
   name!: string;
@@ -37,47 +40,69 @@ export class VietnameseListComponent implements OnInit {
   description!: string;
   // tslint:disable-next-line:variable-name
   error_msg = '';
-  ELEMENT_DATA!: PeriodicElement;
+  ELEMENT_DATA!: PeriodicElement[];
   dataSource!: any;
   displayedColumns!: any;
+  selection!: any;
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private vietnameseService: VietnameseService,
               private router: Router,
               public dialog: MatDialog,
               private toasrt: ToastrService,
-              private tokenstorage: TokenStorageService
+              private tokenstorage: TokenStorageService,
+              private http: HttpClient
   ) {
+    this.reloagPage();
+
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  reloagPage() {
+    this.vietnameseService.getVietnamesesList().subscribe((res) => {
+      this.displayedColumns = ['select', 'id', 'name', 'type', 'spelling', 'description', 'action'];
+      this.ELEMENT_DATA = res;
+      this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+      this.dataSource.paginator = this.paginator;
+      this.selection = new SelectionModel<PeriodicElement>(true, []);
+    });
+  }
 
+  click(i: any): any {
+    console.log(i);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
 
   ngOnInit(): void {
-    this.reloadData();
 
-    this.ELEMENT_DATA  = this.dataSource;
-    // @ts-ignore
-    this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
-
-    this.displayedColumns = ['id', 'name', 'type', 'spelling', 'description'];
-    this.dataSource.paginator = this.paginator;
-
-    // @ts-ignore
   }
 
 
   reloadData(): void {
-    this.vietnameseService.getVietnamesesList().subscribe(
-      data => {
-        this.dataSource = data;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    // this.vietnameses = this.vietnameseService.getVietnamesesList();
-    // // console.log(this.employees);
+    this.vietnameseService.getVietnamesesList().subscribe((res) => {
+
+    });
   }
+
 
   deleteVietnamese(id: number, name: string): void {
     // @ts-ignore
