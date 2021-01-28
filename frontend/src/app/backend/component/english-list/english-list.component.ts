@@ -32,6 +32,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   id!: number;
   name!: string;
   type!: string;
+  vietnamese!: string;
   spelling!: string;
   description!: string;
   error_msg = '';
@@ -39,6 +40,7 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   dataSource!: any;
   displayedColumns!: any;
   selection!: any;
+  vietnameses!: Observable<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -50,7 +52,8 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private toasrt: ToastrService,
               private tokenstorage: TokenStorageService,
-              private http: HttpClient
+              private http: HttpClient,
+              private vietnameseService: VietnameseService
   ) {
     this.reloagPage();
   }
@@ -92,6 +95,8 @@ export class EnglishListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.vietnameses = this.vietnameseService.getVietnamesesList();
+
   }
 
   reloadData(): void {
@@ -220,6 +225,7 @@ export interface DialogData {
   id: number;
   name: string;
   type: string;
+  vietnamese: any;
   spelling: string;
   description: string;
 }

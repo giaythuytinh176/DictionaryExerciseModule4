@@ -35,6 +35,9 @@ export class EnglishService {
   }
 
   updateEnglish(id: number, value: any): Observable<object> {
+    value.vietnamese = JSON.stringify(value.vietnamese) || [];
+    value.type = JSON.stringify(value.type) || [];
+    console.log(value);
     return this.http.put(environment.apiUrl + `/english/${id}`, value, { headers: this.reqHeader });
   }
 
