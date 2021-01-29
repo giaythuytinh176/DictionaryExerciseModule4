@@ -16,11 +16,14 @@
   </div>
 </div>
 
+
 <div *ngIf="snapshot | async as snap">
 
   {{ FSP.transform(snap.bytesTransferred) }} of {{ FSP.transform(snap.totalBytes) }}
 
-<!--  <div *ngIf="downloadURL as url">-->
+  <br>
+
+  <!--  <div *ngIf="downloadURL as url">-->
   <div *ngIf="fb as url">
     <h3>Results!</h3>
     <!--    <img [src]="url"><br>-->
