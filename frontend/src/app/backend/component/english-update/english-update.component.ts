@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {English} from "../../service/english";
-import {ActivatedRoute, Router} from "@angular/router";
-import {EnglishService} from "../../service/english.service";
-import {VietnameseService} from "../../service/vietnamese.service";
-import {Observable} from "rxjs";
-import {ToastrService} from "ngx-toastr";
+import {English} from '../../service/english';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EnglishService} from '../../service/english.service';
+import {VietnameseService} from '../../service/vietnamese.service';
+import {Observable} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-english-update',

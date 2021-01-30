@@ -14,7 +14,7 @@ export class FirebaseComponent implements OnInit {
   title = "cloudsSorage";
   selectedFile: File = null;
   fileToUpload: File = null;
-  fb;
+  fb: string;
   downloadURL: Observable<string>;
   uploadPercent: Observable<number>;
   // Main task
@@ -84,7 +84,7 @@ export class FirebaseComponent implements OnInit {
           console.log(snap)
           if (snap.bytesTransferred === snap.totalBytes) {
             // Update firestore on completion
-            this.db.collection('photos').add( { filePath, size: snap.totalBytes })
+            this.db.collection('photos').add({filePath, size: snap.totalBytes})
           }
         })
       )
@@ -103,33 +103,29 @@ export class FirebaseComponent implements OnInit {
 
   startUpload(event: FileList) {
     // The File object
-    const file = event.item(0)
-
+    const file = event.item(0);
     // Client-side validation example
     if (file.type.split('/')[0] !== 'image') {
-      console.error('unsupported file type :( ')
+      console.error('unsupported file type :( ');
       // return;
     }
-
     // The storage path
     const path = `test/${new Date().getTime()}_${file.name}`;
     const fileRef = this.storage.ref(path);
     // Totally optional metadata
-    const customMetadata = { app: 'My AngularFire-powered PWA!' };
-
+    const customMetadata = {app: 'My AngularFire-powered PWA!'};
     // The main task
-    this.task = this.storage.upload(path, file, { customMetadata })
-
+    this.task = this.storage.upload(path, file, {customMetadata});
     // Progress monitoring
     this.percentage = this.task.percentageChanges();
-    this.snapshot   = this.task.snapshotChanges().pipe(
+    this.snapshot = this.task.snapshotChanges().pipe(
       // The file's download URL
       finalize(() => this.downloadURL = fileRef.getDownloadURL()),
       tap(snap => {
         console.log(snap)
         if (snap.bytesTransferred === snap.totalBytes) {
           // Update firestore on completion
-          this.db.collection('photos').add( { path, size: snap.totalBytes })
+          this.db.collection('photos').add({path, size: snap.totalBytes})
         }
       })
     )
