@@ -15,7 +15,7 @@ export class IndexComponent implements OnInit {
   en = '';
   vi = '';
   // showResult = true;
- searches!: any ;
+  searches!: any;
   english!: any;
   enableEn = false;
   enableVi = false;
@@ -26,17 +26,19 @@ export class IndexComponent implements OnInit {
   word = '';
   search$ = new Subject<string>();
   searchResult$: Observable<any>;
+
   constructor(private vietnameseServiceService: VietnameseServiceService,
               private englishServiceTranlsate: EnglishService,
               private http: HttpClient
-  ) {}
+  ) {
+  }
 
   ngOnInit(): any {
     this.search$.pipe(
       throttleTime(300),
       distinctUntilChanged(),
       concatMap(value => {
-      //switchMap(value => {
+        //switchMap(value => {
         this.word = value;
         return this.http.post(environment.apiUrl + '/translate', {word: value}) || [];
       })
@@ -57,17 +59,17 @@ export class IndexComponent implements OnInit {
     this.enableEn = true;
     console.log(this.vnlist);
   }
-  onInput(event): any{
-  this.searches = event.target.value;
-  this.loadData();
+
+  onInput(event): any {
+    this.searches = event.target.value;
+    this.loadData();
   }
 
   json2array(json) {
     return Object.keys(json).map((key) => [key, json[key]]);
   }
 
-  loadData(): any
-  {
+  loadData(): any {
     this.vietnameseServiceService.afterTranslate(this.searches).subscribe(
       data => {
         this.english = data;

@@ -28,11 +28,27 @@
     <h3>Results!</h3>
     <!--    <img [src]="url"><br>-->
     <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+    <br>
+<!--    <mat-toolbar role="footer" class="mat-elevation-z3 music-control">-->
+<!--      <audio id="audio" controls="controls">-->
+<!--        <source  src="{{ url }}" type="audio/mpeg">-->
+<!--      </audio>-->
+<!--    </mat-toolbar>-->
+
+
+    <mat-toolbar class="app-footer app-player grey bg">
+      <audio id="audio" class="playlist" style="width:100%" controls="controls">
+        <source  src="{{ url }}" type="audio/mpeg">
+      </audio>
+    </mat-toolbar>
+
   </div>
   <br>
+
   <br>
   <button (click)="task.pause()" mat-raised-button color="primary" [disabled]="!isActive(snap)">Pause</button> &nbsp;
   <button (click)="task.resume()" mat-raised-button color="warn" [disabled]="!(snap?.state === 'paused')">Resume</button> &nbsp;
   <button (click)="task.cancel()" mat-raised-button color="accent" [disabled]="!isActive(snap)">Cancel</button> &nbsp;
   <button (click)="reset()" mat-raised-button color="warn">Reset</button> &nbsp;
 </div>
+

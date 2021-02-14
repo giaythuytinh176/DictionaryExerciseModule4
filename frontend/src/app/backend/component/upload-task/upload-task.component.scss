@@ -2,6 +2,35 @@ progress::-webkit-progress-value {
   transition: width 0.1s ease;
 }
 
+.app-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1010;
+  margin: inherit;
+}
+
+.app-player{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  z-index: 1030 !important;
+}
+
+.grey {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #363c43;
+}
+
+.playlist{
+  padding: 10px 0 5px 0;
+  min-height: 3.4375rem;
+  background: inherit;
+}
+
 img {
   width: 500px
 }
@@ -29,4 +58,10 @@ input[type="file"] {
   /* border-right: 1px solid #333333; */
   /* border-bottom: 1px solid #333333; */
   border-left: 1px solid #CCCCCC;
+}
+
+.music-control {
+  position: fixed;
+  bottom: 0;
+  height: 100px;
 }
