@@ -18,8 +18,8 @@ const routes: Routes = [
   {path: 'admin/english/list', component: EnglishListComponent},
   {path: 'admin/english/add', component: EnglishCreateComponent},
   {path: 'admin/english/update/:id', component: EnglishUpdateComponent},
-  {path: 'admin', component: EnglishListComponent},
   {path: 'admin/login', component: LoginComponent},
+  {path: 'admin', component: EnglishListComponent},
   {path: 'admin/upload', component: FirebaseComponent},
 ];
 

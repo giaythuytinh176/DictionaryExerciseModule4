@@ -13,12 +13,12 @@ import {TokenStorageService} from '../../service/token-storage.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {HttpClient} from "@angular/common/http";
 import {SelectionModel} from '@angular/cdk/collections';
+import {MatSort} from '@angular/material/sort';
 
 
 export interface PeriodicElement {
   id: number;
   name: string;
-  english: string;
   type: string;
   spelling: string;
   description: string;
@@ -64,8 +64,10 @@ export class VietnameseListComponent implements OnInit {
       this.displayedColumns = ['select', 'id', 'name', 'type', 'spelling', 'description', 'action'];
       this.ELEMENT_DATA = res;
       this.dataSource = new MatTableDataSource<PeriodicElement>(this.ELEMENT_DATA);
+      this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.selection = new SelectionModel<PeriodicElement>(true, []);
+
     });
   }
 
@@ -91,9 +93,8 @@ export class VietnameseListComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
-
+  @ViewChild(MatSort) sort: MatSort;
   ngOnInit(): void {
-
   }
 
 
@@ -106,7 +107,7 @@ export class VietnameseListComponent implements OnInit {
 
   deleteVietnamese(id: number, name: string): void {
     // @ts-ignore
-    this.vietnameseService.deleteVietnamese(id)
+    const subscription =  this.vietnameseService.deleteVietnamese(id)
       .subscribe(
         data => {
           if (data.status !== undefined && data.status !== 'undefined') {
@@ -125,7 +126,7 @@ export class VietnameseListComponent implements OnInit {
               timeOut: 3000
             });
           } else {
-            this.reloadData();
+            this.reloagPage();
             this.toasrt.success('Deleted successfully', 'Xoá thành công ' + name, {
               progressAnimation: 'decreasing',
               timeOut: 3000
@@ -138,6 +139,8 @@ export class VietnameseListComponent implements OnInit {
             progressAnimation: 'decreasing',
             timeOut: 3000
           });
+        },          () => {
+          subscription.unsubscribe();
         });
   }
 
@@ -170,7 +173,7 @@ export class VietnameseListComponent implements OnInit {
 
   openDialog(id: number, name: string, type: string, spelling?: string, description?: string): void {
     const dialogRef = this.dialog.open(DialogVietnameseDelete, {
-      data: {id, name, type, spelling, description}
+      data: {id: id,name: name,type: type,spelling: spelling,description: description}
     });
     dialogRef.afterClosed().subscribe(result => {
       // console.log('The dialog was closed');
@@ -229,11 +232,11 @@ export class DialogVietnameseCreate implements OnInit {
   vietnameseForm!: FormGroup;
   public vietnameseFormAttempt: boolean;
   typeList = [
-    'Danh từ',
-    'Động từ',
-    'Tính từ',
-    'Trạng từ',
-    'Giới từ',
+    'Noun',
+    'Verb',
+    'Adjective',
+    'Adverb',
+    'Preposition',
   ];
 
   constructor(
